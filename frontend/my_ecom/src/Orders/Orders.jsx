@@ -2,10 +2,29 @@ import React from 'react'
 import './Orders.css'
 import { OrdersData } from './OrdersData'
 import { Link,NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 export const Orders = () => {
+
+  const location=useLocation();
+    const navigate=useNavigate();
+    useEffect(() => {
+        if(localStorage.getItem('token')===null){
+            navigate('/login',
+                {state: {from: location},
+                 replace: true }
+            );
+        }
+    },);
   const data=OrdersData();
   console.log(data)
+  if(data.length===0){
+    return(<div className='header'>No Orders Placed Yet!</div>
+    )
+  }
   return (
     <>
       <div className='header'>My Orders</div>

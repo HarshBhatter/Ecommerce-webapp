@@ -1,15 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Cart.css'
 import { CartData } from './CartData'
 import { NavLink } from 'react-router-dom';
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const Cart = () => {
+
+    const location=useLocation();
+    const navigate=useNavigate();
+    useEffect(() => {
+        if(localStorage.getItem('token')===null){
+            navigate('/login',
+                {state: {from: location},
+                 replace: true }
+            );
+        }
+    },);
+
     const data=CartData();
     console.log(data);
+
     if(data.length==0) 
         return <div className='header'>Your Cart is Empty</div>
+
     return (
     <>
         <div className='header'>Your Cart</div>
@@ -38,7 +54,8 @@ export const Cart = () => {
                                 fetch('http://localhost:8080/RemoveFromCart', {
                                 method: 'POST',
                                 headers: {
-                                    'Content-Type': 'application/json'
+                                    'Content-Type': 'application/json',
+                                    'Authorization':`Bearer ${localStorage.getItem('token')}`
                                 },
                                 body: JSON.stringify({
                                     productid: product.productId,
@@ -54,6 +71,7 @@ export const Cart = () => {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
+                                    ,'Authorization':`Bearer ${localStorage.getItem('token')}`
                                 },
                                 body: JSON.stringify({
                                     productid: product.productId,
@@ -75,6 +93,10 @@ export const Cart = () => {
             () => {
                 fetch('http://localhost:8080/PlaceOrder', {
                     method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
                 }).then(() => window.location.reload())
             }
         }>Place Order</button></div>

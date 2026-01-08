@@ -57,14 +57,15 @@ export const Individualproduct = () => {
                       fetch('http://localhost:8080/AddToCart', {
                         method: 'POST',
                         headers: {
-                          'Content-Type': 'application/json'
+                          'Content-Type': 'application/json',
+                          'Authorization': `Bearer ${localStorage.getItem('token')}`
                         },
                         body: JSON.stringify({
                           productid: data.id,
                           color: selectedColor,
                           size: selectedSize,
                           quantity: 1
-                    })}))}
+                        })})).then(() => window.location.reload())}
                   }>Add to Cart</div>
                 }
             </div>

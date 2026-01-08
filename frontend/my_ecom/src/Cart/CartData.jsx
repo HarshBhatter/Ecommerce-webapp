@@ -8,7 +8,13 @@ export const CartData = () => {
     const [cart,setProducts]=useState([])
 
     useEffect(() => {
-        fetch('http://localhost:8080/Cart')
+        fetch('http://localhost:8080/Cart',{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${localStorage.getItem('token')}`
+            }
+        })
             .then(res => res.json())
             .then(data => setProducts(data))
             .catch(err => console.log(err))

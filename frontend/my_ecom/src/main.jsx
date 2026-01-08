@@ -11,7 +11,10 @@ import { Cart } from './Cart/Cart.jsx'
 import { Products } from './Products/Products.jsx'
 import { Individualproduct } from './Individualproduct/Individualproduct.jsx';
 import { IndividualOrder } from './IndividualOrder/IndividualOrder.jsx'
-import { createBrowserRouter,RouterProvider } from "react-router-dom";
+import { createBrowserRouter,RouterProvider } from "react-router-dom"
+import { LoginOauth } from './LoginOauth/loginOauth.jsx'
+
+
 
 export const Layout = () => {//L is capital as layout is html tag
   return (
@@ -33,16 +36,14 @@ const router = createBrowserRouter([
       { path: "/product/:id", element: <Individualproduct /> },
       { path: "/products/Mens", element: <Products /> },
       { path: "/products/Womens" , element:<Products/> },
-      { path: "/order/:id", element: <IndividualOrder /> }
+      { path: "/order/:id", element: <IndividualOrder /> },
+      { path: "/login/Oauth", element: <LoginOauth /> }
     ],
   },
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <>
-      <RouterProvider router={router}  /> 
-      {/* <IndividualOrder/> */}
-    </>
+    <RouterProvider router={router}  />
   </StrictMode>
 )

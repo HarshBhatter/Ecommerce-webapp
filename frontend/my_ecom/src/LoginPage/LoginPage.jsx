@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './LoginPage.css'
 import { FcGoogle } from "react-icons/fc";
 import { RxCross2 } from "react-icons/rx";
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const LoginPage = () => {
+    const location=useLocation();
+    const navigate=useNavigate();
+    const from = location.state?.from?.pathname || '/';
+    
   return (
     <div className='overlay'>
         <div className='LoginPage'>
             <div className='header'>Log in/Sign in</div>
             <div className='cross'><RxCross2 /></div>
-            <form onSubmit={(e) => {
+            <form onSubmit={async (e) => {
                 e.preventDefault();
-                fetch('http://localhost:8080/login', {
+                try {
+                    const response = await fetch('http://localhost:8080/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -20,7 +27,21 @@ export const LoginPage = () => {
                         username: e.target.username.value,
                         password: e.target.password.value
                     })
-                }).then(() => window.location.href = "/")
+                    });
+
+                    if (response.ok) {
+                        const token = await response.text();
+                        localStorage.setItem("token", token);
+                        navigate(from, { replace: true });
+                        window.location.reload();
+                        console.log(token);
+                    }
+                    else(
+                        alert("Invalid Credentials")
+                    )
+                } catch (error) {
+                    console.error("Login failed", error);
+                }
             }}>
                 <div>
                     <label htmlFor="username">Username</label>
@@ -32,9 +53,12 @@ export const LoginPage = () => {
                 </div>
                 <button type="submit">Login</button>
             </form>
+
             <div>do not have an account?<a href="#">Create Account</a></div>
+
             <div >OR</div>
-            <div className='google' onClick={() => {
+            
+            <div className='google' onClick={async() => {
                 window.location.href = "http://localhost:8080/oauth2/authorization/google"
             }}><FcGoogle /> Continue with google</div>
         </div>
