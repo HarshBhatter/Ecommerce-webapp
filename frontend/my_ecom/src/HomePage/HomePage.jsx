@@ -10,9 +10,10 @@ import { Products } from '../Products/Products.jsx';
 import { Link,NavLink } from 'react-router-dom'
 
 export function Homepage() {
+    
     return (
         <>
-            <div className='Categories'>
+            <div id="Categories" className='Categories'>
                 <NavLink to="/products/Mens" className="men">Men</NavLink>
                 <NavLink to="/products/Womens" className="women">Women</NavLink>
             </div>
@@ -23,7 +24,7 @@ export function Homepage() {
             
             <div id="about-us" className='AboutUs'>
                 <div className='header'>About Us</div>
-                <div className='info'>Hello Everyone! My name is Harsh Bhatter and I am the developer of this E-commerce website.</div>
+                <div className='info'>Hello Everyone! <br />My name is Harsh Bhatter and I am the developer of this E-commerce website :)</div>
             </div>
 
             <div id="contact-us" className='ContactUs'>

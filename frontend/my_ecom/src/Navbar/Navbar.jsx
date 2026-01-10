@@ -12,7 +12,7 @@ export const Navbar = () => {
   var token=localStorage.getItem('token');
   const navigate=useNavigate();
   const location = useLocation();
-
+  // localStorage.removeItem("token");
 
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const Navbar = () => {
     <>
       <div className="navbar">
         <div className="left-navbar">
-          <div><NavLink to="/">Logo</NavLink></div>
+          <div><NavLink to="/#Categories">Logo</NavLink></div>
           <div><NavLink to="/#about-us" >About Us</NavLink><hr></hr></div>
           <div><NavLink to="/#contact-us">Contact Us</NavLink><hr /></div>
         </div>

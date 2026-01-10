@@ -64,6 +64,7 @@ export const Cart = () => {
                                     quantity: 1
                                 })
                             }).then(() => window.location.reload())
+                            .then(alert("Removed From Cart"))
                             }
                         }/>{product.quantity}<FaPlus cursor="pointer" onClick={
                             ()=>{
@@ -80,6 +81,7 @@ export const Cart = () => {
                                     quantity: 1
                                 })
                             }).then(() => window.location.reload())
+                            .then(alert("Added To Cart"))
                         }}/></td>
                         <td>{product.total}</td>
                     </tr>

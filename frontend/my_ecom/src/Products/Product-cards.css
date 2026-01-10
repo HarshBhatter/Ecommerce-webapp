@@ -3,23 +3,38 @@
     border-radius: 8px;
     padding: 10px;
     margin: 10px;
-    width: 200px;
+    width: 330px;
+    height: 300px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     /* text-align: center; */
     background-color: #fff;
     cursor: pointer;
 }
 .product-card .image img{
-    max-width: fit-content;
+    max-width: 100%;
+    max-height: 100%;
     background-color: red;
 }
 .product-card .product-name{
     font-size: 18px;
     font-weight: bold;
-    margin: 8px 0;
+    /* margin: 8px 0; */
 }
 .product-card .product-price{
     color: #28a745;
     font-size: 16px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+}
+.product-card .product-price svg{
+    stroke: currentcolor;
+    fill: currentcolor;
+    padding-top: 2%;
+    height: 1em;
+    width: 1em;
+}
+.product-card .image{
+    height: 80%;
+    align-items: center;
+    display: flex;
+    justify-content: center 
 }

@@ -1,9 +1,9 @@
 .products{
     display: flex;
     flex-wrap: wrap;
-    column-gap: auto;
+    /* column-gap: auto; */
     padding: 20px;
-    /* /* justify-content: space-between; */
+    /* justify-content: space-between; */
     border-bottom: 2px solid rgb(22, 18, 13);
 }
 .Pages{

@@ -11,9 +11,10 @@ import { Cart } from './Cart/Cart.jsx'
 import { Products } from './Products/Products.jsx'
 import { Individualproduct } from './Individualproduct/Individualproduct.jsx';
 import { IndividualOrder } from './IndividualOrder/IndividualOrder.jsx'
-import { createBrowserRouter,RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { LoginOauth } from './LoginOauth/loginOauth.jsx'
-
+import { AddProduct } from './AddProduct/AddProduct.jsx'
+import { CreateAccount } from './CreateAccount/CreateAccount.jsx'
 
 
 export const Layout = () => {//L is capital as layout is html tag
@@ -27,23 +28,25 @@ export const Layout = () => {//L is capital as layout is html tag
 };
 const router = createBrowserRouter([
   {
-    element: <Layout />, 
+    element: <Layout />,
     children: [
       { path: "/", element: <Homepage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/orders", element: <Orders /> },
       { path: "/cart", element: <Cart /> },
       { path: "/product/:id", element: <Individualproduct /> },
-      { path: "/products/Mens", element: <Products /> },
-      { path: "/products/Womens" , element:<Products/> },
+      { path: "/products/Mens", element: <div><div className='header'>Mens Category</div><Products /></div> },
+      { path: "/products/Womens", element: <div><div className='header' display='flex' justify-content='center' align-items='center' >Womens Category</div><Products /></div>},
       { path: "/order/:id", element: <IndividualOrder /> },
-      { path: "/login/Oauth", element: <LoginOauth /> }
+      { path: "/login/Oauth", element: <LoginOauth /> },
+      { path: "/AddProduct", element: <AddProduct /> },
+      { path: "/CreateAccount", element: <CreateAccount /> }
     ],
   },
 ]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}  />
+    <RouterProvider router={router} />
   </StrictMode>
 )

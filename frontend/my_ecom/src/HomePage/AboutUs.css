@@ -7,8 +7,9 @@
     justify-content: center;
 }
 .AboutUs .info{
-    height: 800px
-    /* margin-top: 2%;
+    /* height: 800px */
+    color: black;
+    margin: 2%;
     font-size: 120%;
-    text-align: center; */
+    text-align: center;
 }

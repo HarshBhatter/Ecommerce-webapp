@@ -1,24 +1,24 @@
 import React from 'react'
-import './LoginPage.css'
-import { FcGoogle } from "react-icons/fc";
+import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { RxCross2 } from "react-icons/rx";
-import { useLocation } from 'react-router-dom';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
 
-export const LoginPage = () => {
+
+export const CreateAccount = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
-
-    return (
+  return (
+    <>
         <div className='overlay'>
             <div className='LoginPage'>
-                <div className='header'>Log in/Sign in</div>
+                <div className='header'>Create Account</div>
                 <NavLink to="/" className='cross'><RxCross2 /></NavLink>
                 <form onSubmit={async (e) => {
                     e.preventDefault();
                     try {
-                        const response = await fetch('http://localhost:8080/login', {
+                        const response = await fetch('http://localhost:8080/create_account', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -37,12 +37,12 @@ export const LoginPage = () => {
                             console.log(token);
                         }
                         else (
-                            alert("Invalid Credentials")
+                            alert("Invalid Credentials/Username already exists")
                         )
                     } catch (error) {
                         console.error("Login failed", error);
                     }
-                }}>
+                    }}>
 
                     <div>
                         <label htmlFor="username">Username</label>
@@ -52,23 +52,11 @@ export const LoginPage = () => {
                         <label htmlFor="password">Password</label>
                         <input type="password" id="password" name="password" required />
                     </div>
-                    <button type="submit">Login</button>
+                    <button type="submit">Create</button>
 
                 </form>
-
-                <div>do not have an account?<a href="#" onClick={()=>{
-                    navigate('/CreateAccount',
-                        {state: {from: from},
-                         replace: true }
-                    )
-                }}>Create Account</a></div>
-
-                <div >OR</div>
-
-                <div className='google' onClick={async () => {
-                    window.location.href = "http://localhost:8080/oauth2/authorization/google"
-                }}><FcGoogle /> Continue with google</div>
             </div>
         </div>
-    )
+    </>
+  )
 }

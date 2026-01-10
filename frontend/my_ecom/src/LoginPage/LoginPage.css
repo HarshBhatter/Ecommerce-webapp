@@ -96,3 +96,6 @@ input:focus{
     font-weight: bold;
     cursor: pointer;
 }
+.cross svg{
+    color :black
+}

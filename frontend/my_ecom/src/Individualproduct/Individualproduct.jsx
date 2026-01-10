@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import './Individualproduct.css'
 import { Products } from '../Products/Products'
 import { IndividualProductData } from './IndividualProductData'
@@ -10,12 +10,16 @@ export const Individualproduct = () => {
   const data = IndividualProductData(id);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
+  const [pic,setPic] =useState(data?.color?.[0]?.picture);  
+  useEffect(()=>{
+      setPic(data?.color?.[0]?.picture)
+    },[data.color])
   // console.log(selectedColor)
   return (
     <>
         <div className='OuterBox'>
             <div className='image'>
-                <img src={data.picture} alt="product image" />
+                <img src={`data:image/jpeg;base64,${pic}`} alt={data.name}/>
             </div>
             <div className='details'>
                 <div className='product-name'>{data.name}</div>
@@ -29,9 +33,9 @@ export const Individualproduct = () => {
                       {data?.color?.map((c, index) => (
                         <div key={index} 
                              className="color-box" 
-                             style={{ backgroundColor: c.color, border: selectedColor === c.color ? '2px solid black' : '1px solid rgb(197, 171, 171)' }} 
+                             style={{ backgroundColor: c.color, border: selectedColor === c.color ? '2px solid white' : '1px solid rgb(197, 171, 171)' }} 
                              title={c.color}
-                             onClick={() => setSelectedColor(c.color)}
+                             onClick={() => {setSelectedColor(c.color),setPic(c.picture)}}
                         ></div> 
                       ))}
                 </div>
@@ -42,7 +46,10 @@ export const Individualproduct = () => {
                         c.color === selectedColor && (
                             <div className='colors'>Sizes :{
                             c.size.map((s, index) => (
-                              <div key={index} className="size-box" onClick={()=>setSelectedSize(s.size)}>{s.size}</div>
+                              <div key={index} 
+                              className="size-box" 
+                              style={{border : selectedSize === s.size ? '2px solid white':'1px solid rgb(197, 171, 171)'}}
+                              onClick={()=>{setSelectedSize(s.size)}}>{s.size}</div>
                             ))
                           }</div>
                       )
@@ -53,19 +60,24 @@ export const Individualproduct = () => {
                 {
                   <div className='add-to-cart-button' onClick={
                     () => {
-                      selectedColor!=null && selectedSize!=null && (
-                      fetch('http://localhost:8080/AddToCart', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                          'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        },
-                        body: JSON.stringify({
-                          productid: data.id,
-                          color: selectedColor,
-                          size: selectedSize,
-                          quantity: 1
-                        })})).then(() => window.location.reload())}
+                      if(!selectedColor || !selectedSize)
+                        alert("Select Color and Size")
+                      else
+                      {
+                        selectedColor!=null && selectedSize!=null && (
+                        fetch('http://localhost:8080/AddToCart', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                          },
+                          body: JSON.stringify({
+                            productid: data.id,
+                            color: selectedColor,
+                            size: selectedSize,
+                            quantity: 1
+                          })})).then(() => window.location.reload())
+                      }}
                   }>Add to Cart</div>
                 }
             </div>
