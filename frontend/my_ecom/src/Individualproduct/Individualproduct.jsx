@@ -4,8 +4,14 @@ import { Products } from '../Products/Products'
 import { IndividualProductData } from './IndividualProductData'
 import { useParams } from 'react-router-dom'
 import { FaRupeeSign } from "react-icons/fa";
+import { NavLink,Link,Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+
 
 export const Individualproduct = () => {
+  const location=useLocation();
+  const navigate=useNavigate();
   const {id}=useParams();
   const data = IndividualProductData(id);
   const [selectedColor, setSelectedColor] = useState(null);
@@ -60,11 +66,18 @@ export const Individualproduct = () => {
                 {
                   <div className='add-to-cart-button' onClick={
                     () => {
-                      if(!selectedColor || !selectedSize)
+                      if(localStorage.getItem("token")==null)
+                      {
+                          navigate('/login',
+                              {state: {from: location},
+                               replace: true }
+                          );
+                      }
+                      else if(!selectedColor || !selectedSize)
                         alert("Select Color and Size")
                       else
                       {
-                        selectedColor!=null && selectedSize!=null && (
+                        selectedColor!=null && selectedSize!=null && localStorage.getItem('token')!=null && (
                         fetch('http://localhost:8080/AddToCart', {
                           method: 'POST',
                           headers: {

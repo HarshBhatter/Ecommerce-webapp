@@ -10,17 +10,20 @@ import { FaRupeeSign } from "react-icons/fa";
 import { useState, useEffect } from 'react';
 
 export const Products = () => {
-    const location = useLocation(); 
-    let products = [12]; 
-    if (location.pathname === "/products/Mens") 
-        { products = MensProducts(); } 
-    else if (location.pathname === "/products/Womens")
-        { products = WomensProducts(); }
-    else 
-        { products = ProductsData(); } 
-    // console.log(products.length); 
-    if (products.length === 0)
-        return <div className='header'>No Products Found <br /><CiFaceFrown /></div>
+   const { products, loading } = ProductsData();
+
+    if (loading) {
+        return <div className="header">Loading products...</div>;
+    }
+
+    if (products.length === 0) {
+        return (
+            <div className='header'>
+                No Products Found <br />
+                <CiFaceFrown />
+            </div>
+        );
+    }
 
     return (
         <>

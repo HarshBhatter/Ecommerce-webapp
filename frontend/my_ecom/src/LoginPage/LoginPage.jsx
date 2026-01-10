@@ -14,7 +14,7 @@ export const LoginPage = () => {
         <div className='overlay'>
             <div className='LoginPage'>
                 <div className='header'>Log in/Sign in</div>
-                <NavLink to="/" className='cross'><RxCross2 /></NavLink>
+                <NavLink to={from} className='cross'><RxCross2 /></NavLink>
                 <form onSubmit={async (e) => {
                     e.preventDefault();
                     try {
