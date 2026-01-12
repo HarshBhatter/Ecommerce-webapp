@@ -5,12 +5,13 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FaCircleUser } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
+import { RiShoppingBag4Fill } from "react-icons/ri";
 
 export const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
   const dropdownRef = useRef(null);
-  var token=localStorage.getItem('token');
-  const navigate=useNavigate();
+  var token = localStorage.getItem('token');
+  const navigate = useNavigate();
   const location = useLocation();
   // localStorage.removeItem("token");
 
@@ -31,11 +32,25 @@ export const Navbar = () => {
     token = localStorage.getItem('token');
   }, [token]);
 
+  useEffect(() => {
+    const interval=setInterval(() => {
+      const l = localStorage.getItem('logintime');
+
+      if (l && Date.now() - l > 1800000) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("logintime");
+        alert("Session Expired");
+        window.location.reload();
+      }
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <div className="navbar">
         <div className="left-navbar">
-          <div><NavLink to="/#Categories">Logo</NavLink></div>
+          <div><NavLink to="/#Categories"><RiShoppingBag4Fill /></NavLink></div>
           <div><NavLink to="/#about-us" >About Us</NavLink><hr></hr></div>
           <div><NavLink to="/#contact-us">Contact Us</NavLink><hr /></div>
         </div>
@@ -43,40 +58,41 @@ export const Navbar = () => {
         <div className="right-navbar">
           <div><NavLink to="/cart"><FaCartShopping /></NavLink><hr /></div>
           <div><NavLink to="/orders">My Orders</NavLink><hr /></div>
-          {token ? (
-            <div style={{ position: 'relative' }} ref={dropdownRef}>
-              <FaCircleUser style={{ cursor: 'pointer' }} onClick={() => setShowLogout(!showLogout)} />
-              <hr />
-              {showLogout && (
-                  <div style={{position: 'absolute', top: '100%', right: 0, backgroundColor: 'white', color: 'black',border: '1px solid #ccc', padding: '5px 10px', cursor: 'pointer', zIndex: 1000
-                    }} onClick={async () => {
-                      await fetch('http://localhost:8080/Logout', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json',
-                          'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        }})
-                        .then(Response=>{
-                          if(Response.ok)
-                          {
-                            localStorage.removeItem('token');
-                            window.location.reload();
-                          }
-                        })
-                        .catch(error => {
-                          console.log(error);
-                        });
-                    }}>
-                    Logout
-                  </div>
-              )}
-            </div>
+          {token ? (<div style={{ position: 'relative' }} ref={dropdownRef}>
+            <FaCircleUser style={{ cursor: 'pointer' }} onClick={() => setShowLogout(!showLogout)} />
+            <hr />
+            {showLogout && (
+              <div style={{
+                position: 'absolute', top: '100%', right: 0, backgroundColor: 'white', color: 'black', border: '1px solid #ccc', padding: '5px 10px', cursor: 'pointer', zIndex: 1000
+              }} onClick={async () => {
+                await fetch('http://localhost:8080/Logout', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                  }
+                })
+                  .then(Response => {
+                    if (Response.ok) {
+                      localStorage.removeItem('token');
+                      window.location.reload();
+                    }
+                  })
+                  .catch(error => {
+                    console.log(error);
+                  });
+              }}>
+                Logout
+              </div>
+            )}
+          </div>
           ) : (
-            <div onClick={()=>
-            {
+            <div onClick={() => {
               navigate('/login',
-                {state: {from: location},
-                 replace: true }
+                {
+                  state: { from: location },
+                  replace: true
+                }
               );
             }
             }>Login<hr /></div>

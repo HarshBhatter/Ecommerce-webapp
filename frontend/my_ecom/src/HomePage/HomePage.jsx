@@ -10,7 +10,8 @@ import { Products } from '../Products/Products.jsx';
 import { Link,NavLink } from 'react-router-dom'
 
 export function Homepage() {
-    
+    console.log(localStorage.getItem("token"));
+    console.log(localStorage.getItem("logintime"));
     return (
         <>
             <div id="Categories" className='Categories'>

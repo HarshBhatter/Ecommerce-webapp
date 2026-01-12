@@ -8,7 +8,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 export const LoginPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const from = location.state?.from?.pathname || '/';
+    const from = '/';
 
     return (
         <div className='overlay'>
@@ -31,7 +31,9 @@ export const LoginPage = () => {
 
                         if (response.ok) {
                             const token = await response.text();
+                            const logintime = Date.now();
                             localStorage.setItem("token", token);
+                            localStorage.setItem("logintime", logintime);
                             navigate(from, { replace: true });
                             window.location.reload();
                             console.log(token);

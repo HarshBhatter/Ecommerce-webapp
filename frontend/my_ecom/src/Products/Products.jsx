@@ -30,7 +30,6 @@ export const Products = () => {
             <div>
                 <div className='products'>
                     {products.map((product) => (
-                        console.log(product),
                         <NavLink to={`/product/${product.id}`} className='product-card' key={product.id}>
                             <div className='image'><img src={`data:image/jpeg;base64,${product?.color?.[0]?.picture}`} alt={product.name} /></div>
                             <div className='product-name'>{product.name}</div>
