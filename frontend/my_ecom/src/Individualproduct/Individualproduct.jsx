@@ -1,5 +1,5 @@
 import React, { useState , useEffect} from 'react'
-import './Individualproduct.css'
+import './IndividualProduct.css'
 import { Products } from '../Products/Products'
 import { IndividualProductData } from './IndividualProductData'
 import { useParams } from 'react-router-dom'
