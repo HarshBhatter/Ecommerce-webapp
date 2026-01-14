@@ -29,8 +29,8 @@ target/
 *.class
 
 # Application config (ONLY if you intend to ignore it)
-application.properties
-**/application.properties
+# application.properties
+# **/application.properties
 
 ################################
 # IDE / OS
