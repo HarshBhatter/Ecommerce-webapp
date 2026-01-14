@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Frontend (Vite / React)
+frontend/my_ecom/node_modules/
+frontend/my_ecom/dist/
+frontend/my_ecom/.vite/
