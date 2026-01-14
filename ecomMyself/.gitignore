@@ -1,0 +1,17 @@
+﻿# Application properties
+application.properties
+**/application.properties
+
+# Maven target
+target/
+**/target/
+
+# Compiled classes
+*.class
+
+# IDE
+.idea/
+
+# Build outputs
+bin/
+build/

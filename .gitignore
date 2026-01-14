@@ -1,17 +1,52 @@
-﻿# Application properties
+﻿################################
+# Logs
+################################
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+################################
+# Frontend (Vite / React)
+################################
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+
+# Explicit frontend safety
+frontend/my_ecom/node_modules/
+frontend/my_ecom/dist/
+frontend/my_ecom/.vite/
+
+################################
+# Backend (Spring Boot / Maven)
+################################
+target/
+**/target/
+*.class
+
+# Application config (ONLY if you intend to ignore it)
 application.properties
 **/application.properties
 
-# Maven target
-target/
-**/target/
-
-# Compiled classes
-*.class
-
-# IDE
+################################
+# IDE / OS
+################################
 .idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
+################################
 # Build outputs
+################################
 bin/
 build/
