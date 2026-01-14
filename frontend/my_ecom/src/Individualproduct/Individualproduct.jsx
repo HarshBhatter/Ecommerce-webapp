@@ -78,7 +78,7 @@ export const Individualproduct = () => {
                       else
                       {
                         selectedColor!=null && selectedSize!=null && localStorage.getItem('token')!=null && (
-                        fetch('http://localhost:8080/AddToCart', {
+                        fetch(`${import.meta.env.VITE_API_URL}/AddToCart`, {
                           method: 'POST',
                           headers: {
                             'Content-Type': 'application/json',

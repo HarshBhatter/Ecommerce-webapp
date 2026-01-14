@@ -65,22 +65,19 @@ export const Navbar = () => {
               <div style={{
                 position: 'absolute', top: '100%', right: 0, backgroundColor: 'white', color: 'black', border: '1px solid #ccc', padding: '5px 10px', cursor: 'pointer', zIndex: 1000
               }} onClick={async () => {
-                await fetch('http://localhost:8080/Logout', {
+                await fetch(`${import.meta.env.VITE_API_URL}/Logout`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                   }
                 })
-                  .then(Response => {
-                    if (Response.ok) {
-                      localStorage.removeItem('token');
-                      window.location.reload();
-                    }
-                  })
                   .catch(error => {
                     console.log(error);
                   });
+                  localStorage.removeItem("token");
+                  localStorage.removeItem("logintime");
+                  window.location.reload();
               }}>
                 Logout
               </div>

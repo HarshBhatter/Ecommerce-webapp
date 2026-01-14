@@ -7,7 +7,7 @@ export const IndividualOrderData = (id) => {
     const [data, setData] = useState([])
     useEffect(() =>{
         if(id){
-            fetch(`http://localhost:8080/MyOrders/?id=${id}`,{
+            fetch(`${import.meta.env.VITE_API_URL}/MyOrders/?id=${id}`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',

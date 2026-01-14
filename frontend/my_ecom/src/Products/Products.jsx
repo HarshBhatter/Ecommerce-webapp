@@ -3,8 +3,6 @@ import './Products.css'
 import './Product-cards.css'
 import { CiFaceFrown } from "react-icons/ci";
 import { ProductsData } from './ProductsData'
-import { MensProducts } from './MensData'
-import { WomensProducts } from './WomensData'
 import { NavLink, useLocation } from 'react-router-dom'
 import { FaRupeeSign } from "react-icons/fa";
 import { useState, useEffect } from 'react';

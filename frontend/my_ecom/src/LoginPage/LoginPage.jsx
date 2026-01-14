@@ -18,7 +18,7 @@ export const LoginPage = () => {
                 <form onSubmit={async (e) => {
                     e.preventDefault();
                     try {
-                        const response = await fetch('http://localhost:8080/login', {
+                        const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -38,9 +38,9 @@ export const LoginPage = () => {
                             window.location.reload();
                             console.log(token);
                         }
-                        else (
+                        else {
                             alert("Invalid Credentials")
-                        )
+                        }
                     } catch (error) {
                         console.error("Login failed", error);
                     }
@@ -68,7 +68,7 @@ export const LoginPage = () => {
                 <div >OR</div>
 
                 <div className='google' onClick={async () => {
-                    window.location.href = "http://localhost:8080/oauth2/authorization/google"
+                    window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`
                 }}><FcGoogle /> Continue with google</div>
             </div>
         </div>

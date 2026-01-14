@@ -8,7 +8,7 @@ export const CartData = () => {
     const [cart,setProducts]=useState([])
 
     useEffect(() => {
-        fetch('http://localhost:8080/Cart',{
+        fetch(`${import.meta.env.VITE_API_URL}/Cart`,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json',

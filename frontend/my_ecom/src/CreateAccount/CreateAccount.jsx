@@ -18,7 +18,7 @@ export const CreateAccount = () => {
                 <form onSubmit={async (e) => {
                     e.preventDefault();
                     try {
-                        const response = await fetch('http://localhost:8080/create_account', {
+                        const response = await fetch(`${import.meta.env.VITE_API_URL}/create_account`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'

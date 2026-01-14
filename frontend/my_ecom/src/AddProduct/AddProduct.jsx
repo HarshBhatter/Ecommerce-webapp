@@ -52,7 +52,7 @@ export const AddProduct = () => {
         formData.append("image", image)
 
         try {
-            const res = await fetch("http://localhost:8080/AddProducts", {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/AddProducts`, {
                 method: "POST",
                 // headers: {
                 //   Authorization: `Bearer ${localStorage.getItem("token")}`

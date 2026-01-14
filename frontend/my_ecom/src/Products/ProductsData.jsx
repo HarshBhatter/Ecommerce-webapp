@@ -9,12 +9,12 @@ export const ProductsData = () => {
     useEffect(() => {
         setLoading(true);
 
-        let url = "http://localhost:8080/All";
-
+        let url = `${import.meta.env.VITE_API_URL}/All`;
+        console.log("url" + url);
         if (location.pathname === "/products/Mens") {
-            url = "http://localhost:8080/Mens";
+            url = `${import.meta.env.VITE_API_URL}/Mens`;
         } else if (location.pathname === "/products/Womens") {
-            url = "http://localhost:8080/Womens";
+            url = `${import.meta.env.VITE_API_URL}/Womens`;
         }
 
         fetch(url)
