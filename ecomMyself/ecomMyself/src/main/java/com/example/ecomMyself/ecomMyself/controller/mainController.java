@@ -52,7 +52,7 @@ public class mainController {
         }
     }
 
-    @PostMapping("login")
+    @PostMapping("Login")
     public String login(@RequestBody Users user) {
         if(user.getPassword()==null)
             throw new BadCredentialsException("Password is required");
