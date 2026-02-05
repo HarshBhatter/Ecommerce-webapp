@@ -8,10 +8,30 @@ import { FaRupeeSign } from "react-icons/fa";
 import { useState, useEffect } from 'react';
 
 export const Products = () => {
-   const { products, loading } = ProductsData();
+    const [page, setPage] = useState(0);
+    const { products, loading ,totalpages} = ProductsData(page);
+    const [timer, setTimer] = useState("00:00:00");
+
+    useEffect(() => {
+        let interval;
+        if (loading) {
+            const startTime = Date.now();
+            interval = setInterval(() => {
+                const totalSeconds = Math.floor((Date.now() - startTime) / 1000);
+                const h = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+                const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+                const s = String(totalSeconds % 60).padStart(2, '0');
+                setTimer(`${h}:${m}:${s}`);
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [loading]);
 
     if (loading) {
-        return <div className="header">Loading products...</div>;
+        return <div className="header">Loading products...<br></br>
+            {timer} <br></br>
+            <div style={{ fontSize: "50%" }}> (expected waiting time : 3mins)</div>
+        </div>;
     }
 
     if (products.length === 0) {
@@ -35,15 +55,18 @@ export const Products = () => {
                         </NavLink>
                     ))}
                 </div>
-                {/* <div className='Pages'>
-                    <div className='previous'>&lt;</div>
-                    <div className='page-numbers'>
-                        <div className='number'>1</div>
-                        <div className='number'>2</div>
-                        <div className='number'>3</div>
+                {totalpages > 1 && (
+                    <div className='Pages'>
+                        <div className='previous'>&lt;</div>
+                        <div className='page-numbers'>
+                            {Array.from({ length: totalpages }, (_, i) => (
+                                <div className='number' key={i + 1} onClick={() => setPage(i)}>{i + 1}</div>
+                            ))}
+                        </div>
+                        <div className='next'>&gt;</div>
                     </div>
-                    <div className='next'>&gt;</div>
-                </div> */}
+                )}
+                
             </div>
         </>
     )
