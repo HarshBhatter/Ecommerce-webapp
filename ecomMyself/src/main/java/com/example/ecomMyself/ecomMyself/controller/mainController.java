@@ -6,6 +6,7 @@ import com.example.ecomMyself.ecomMyself.repository.User_Repo;
 import com.example.ecomMyself.ecomMyself.service.*;
 import com.example.ecomMyself.ecomMyself.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -42,7 +43,7 @@ public class mainController {
     public ResponseEntity<?> creating_account(@RequestBody Users user) {
         try {
             Users savedUser = user_service.save(user);
-            return ResponseEntity.ok(savedUser);
+            return ResponseEntity.ok(jwtService.generateToken(user.getUsername(), user.getVersion()));
         }
         catch (Exception e)
         {
@@ -79,10 +80,11 @@ public class mainController {
         return "logged out";
     }
     @GetMapping("All")
-    public ResponseEntity<?> products()
+    public ResponseEntity<?> products(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
     {
+        System.out.println(page+" "+size);
         try {
-            List<Product> products=products_service.getAll();
+            Page<Product> products=products_service.getAll(page,size);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
@@ -93,10 +95,10 @@ public class mainController {
         }
     }
     @GetMapping("Mens")
-    public ResponseEntity<?> mensproduct()
+    public ResponseEntity<?> mensproduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
     {
         try {
-            List<Product> products=products_service.getMenAll();
+            Page<Product> products=products_service.getMenAll(page,size);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
@@ -107,10 +109,10 @@ public class mainController {
         }
     }
     @GetMapping("Womens")
-    public ResponseEntity<?> womensproduct()
+    public ResponseEntity<?> womensproduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
     {
         try {
-            List<Product> products=products_service.getWomenAll();
+            Page<Product> products=products_service.getWomenAll(page,size);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)

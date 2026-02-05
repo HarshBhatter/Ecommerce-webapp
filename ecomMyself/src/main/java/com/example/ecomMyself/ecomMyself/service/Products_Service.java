@@ -10,6 +10,10 @@ import com.example.ecomMyself.ecomMyself.repository.Product_colors_repo;
 import com.example.ecomMyself.ecomMyself.repository.Product_size_repo;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -113,18 +117,22 @@ public class Products_Service {
         }
     }
 
-    public List<Product> getAll()
+    public Page<Product> getAll(int page,int size)
     {
-        List<Product> products=product_repo.findAll();
+        System.out.println("service : "+page+" "+size);
+        Pageable pageable= ((Pageable) PageRequest.of(page,size));
+        Page<Product> products=product_repo.findAll(pageable);
         return products;
     }
 
-    public List<Product> getMenAll() {
-        List<Product> products=product_repo.findAllByGender("Men");
+    public Page<Product> getMenAll(int page,int size) {
+        Pageable pageable= ((Pageable) PageRequest.of(page,size));
+        Page<Product> products=product_repo.findAllByGender("Men",pageable);
         return products;
     }
-    public List<Product> getWomenAll() {
-        List<Product> products=product_repo.findAllByGender("Women");
+    public Page<Product> getWomenAll(int page,int size) {
+        Pageable pageable= ((Pageable) PageRequest.of(page,size));
+        Page<Product> products=product_repo.findAllByGender("Women",pageable);
         return products;
     }
 
