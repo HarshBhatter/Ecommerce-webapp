@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 
 export const Products = () => {
     const [page, setPage] = useState(0);
-    const { products, loading ,totalpages} = ProductsData(page);
+    const { products=[], loading ,totalpages=0} = ProductsData(page);
     const [timer, setTimer] = useState("00:00:00");
 
     useEffect(() => {
