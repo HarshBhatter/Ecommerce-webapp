@@ -3,7 +3,7 @@ import './IndividualProduct.css'
 import { Products } from '../Products/Products'
 import { IndividualProductData } from './IndividualProductData'
 import { useParams } from 'react-router-dom'
-import { FaRupeeSign } from "react-icons/fa";
+import { FaRupeeSign, FaUnderline } from "react-icons/fa";
 import { NavLink,Link,Navigate } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
@@ -95,7 +95,7 @@ export const Individualproduct = () => {
                 }
             </div>
         </div>
-        <div className='header'>More of Such Types</div>
+        <div className='header' style={{ borderBottom: '3px solid black'}}>~More of Such Types~</div>
         <div>{<Products />}</div>
     </>
   )

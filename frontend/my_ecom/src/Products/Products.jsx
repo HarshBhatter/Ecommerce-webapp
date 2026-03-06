@@ -34,7 +34,7 @@ export const Products = () => {
         </div>;
     }
 
-    if (products.length === 0) {
+    if (!loading && products.length === 0) {
         return (
             <div className='header'>
                 No Products Found <br />

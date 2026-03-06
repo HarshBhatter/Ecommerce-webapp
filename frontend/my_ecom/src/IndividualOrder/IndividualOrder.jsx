@@ -4,6 +4,7 @@ import '../Cart/Cart.css'
 import './IndividualOrder.css'
 import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { FaRupeeSign } from "react-icons/fa";
 
 
 export const IndividualOrder = () => {
@@ -34,7 +35,7 @@ export const IndividualOrder = () => {
                          <td>{product.color}</td>
                          <td>{product.size}</td>
                          <td>{product.quantity}</td>
-                         <td>{product.total}</td>
+                         <td><FaRupeeSign />{product.total}</td>
                      </tr>
                      </tbody>
                  ))}
@@ -46,7 +47,7 @@ export const IndividualOrder = () => {
                          <td></td>
                          <td></td>
                          <td></td>
-                         <td className='total' >{data.total}</td>
+                         <td className='total' ><FaRupeeSign />{data.total}</td>
                      </tr>
                     </tbody>
                 

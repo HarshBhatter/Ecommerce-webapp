@@ -5,6 +5,8 @@ import { Link,NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { FaRegBell, FaRupeeSign } from "react-icons/fa";
+
 
 
 export const Orders = () => {
@@ -46,12 +48,12 @@ export const Orders = () => {
               <tr>
                 <td>{index + 1}</td>
                 <td><NavLink to={`/order/${order.id}`}>{order.orderId}</NavLink></td>
-                <td>{order.orderDate}</td>
-                <td>{order.status}</td>
+                <td>{(new Date(order.orderDate).toLocaleDateString())}</td>
+                <td style={{ color: 'rgb(23, 62, 4)' }}>{order.status}</td>
                 <td>{order.items.map((items)=>(
                   <div>{items.productName}</div>
                 ))}</td>
-                <td>{order.total}</td>
+                <td><FaRupeeSign />{order.total}</td>
               </tr>
             </tbody>
         ))}
