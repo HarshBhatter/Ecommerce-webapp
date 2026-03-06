@@ -29,6 +29,8 @@ public class Order_service {
     private Product_size_repo productSizeRepo;
     @Autowired
     private Cart_repo cartRepo;
+    @Autowired
+    private User_Repo userRepo;
 
     public Cart_response[] cart(int id) {
         List<Cart> list= cartRepo.findAllByUserId(id);
@@ -267,6 +269,7 @@ public class Order_service {
         if(c.getQuantity()>quantity_available)
             throw new RuntimeException("Not Availaible");
         user.setCartValue(user.getCartValue().add(BigDecimal.valueOf(c.getQuantity()).multiply(p.get().getPrice())));
+        userRepo.save(user);
         c.setProductid(orderItemRequest.productid());
         cartRepo.save(c);
     }
@@ -304,6 +307,7 @@ public class Order_service {
             throw new RuntimeException("Not Applicable");
         c.setQuantity(c.getQuantity()-1);
         user.setCartValue(user.getCartValue().subtract(BigDecimal.valueOf(c.getQuantity()).multiply(p.get().getPrice())));
+        userRepo.save(user);
         if(c.getQuantity()==0)
             cartRepo.delete(c);
         else {

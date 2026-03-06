@@ -72,6 +72,6 @@ public class Users {
     }
 
     public void setCartValue(BigDecimal cartValue) {
-        this.cartValue.add(cartValue);
+        this.cartValue=cartValue;
     }
 }
