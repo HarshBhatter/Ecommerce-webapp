@@ -3,6 +3,8 @@ import com.example.ecomMyself.ecomMyself.model.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Collections;
 //to add extra features to UserDetails
@@ -60,5 +62,8 @@ public class UserPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+    public BigDecimal getCartValue(){
+        return user.getCartValue();
     }
 }

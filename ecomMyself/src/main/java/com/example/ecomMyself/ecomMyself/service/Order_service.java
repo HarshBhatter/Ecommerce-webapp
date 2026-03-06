@@ -101,8 +101,9 @@ public class Order_service {
 
 
     @Transactional
-    public void placeOrder(UserPrincipal principal)
+    public void placeOrder(UserPrincipal principal,String razorpayPaymentId)
     {
+        System.out.println("placing order..");
         List<Cart> c=cartRepo.findAllByUserId(principal.getUser().getId());
         List<Order_item_request> orderItemRequestList=new ArrayList<>();
         for(Cart items:c)
@@ -117,6 +118,7 @@ public class Order_service {
         o.setOrderDate(LocalDate.now());
         o.setStatus("Order Placed");
         o.setUserId(principal.getUser().getId());
+        o.setRazorpayPaymentId(razorpayPaymentId);
         List<Order_items> oi=new ArrayList<>();
         BigDecimal total=BigDecimal.ZERO;
         for(Order_item_request oir:request.orderItemRequests())

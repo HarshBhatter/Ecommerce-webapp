@@ -85,6 +85,7 @@ public class mainController {
         System.out.println(page+" "+size);
         try {
             Page<Product> products=products_service.getAll(page,size);
+            System.out.println(products);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)

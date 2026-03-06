@@ -19,11 +19,12 @@ public class Orders {
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<Order_items> orderItems;
     private BigDecimal total;
+    private String razorpayPaymentId;
 
     public Orders() {
     }
 
-    public Orders(Long id, String orderId,int userId, String status, LocalDate orderDate, List<Order_items> orderItems,BigDecimal total) {
+    public Orders(Long id, String orderId,int userId, String status, LocalDate orderDate, List<Order_items> orderItems,BigDecimal total,String razorpayPaymentId) {
         this.id = id;
         this.orderId = orderId;
         this.userId = userId;
@@ -31,6 +32,7 @@ public class Orders {
         this.orderDate = orderDate;
         this.orderItems = orderItems;
         this.total=total;
+        this.razorpayPaymentId=razorpayPaymentId;
     }
 
     public BigDecimal getTotal() {
@@ -87,5 +89,13 @@ public class Orders {
 
     public void setOrderItems(List<Order_items> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public String getRazorpayPaymentId() {
+        return razorpayPaymentId;
+    }
+
+    public void setRazorpayPaymentId(String razorpayPaymentId) {
+        this.razorpayPaymentId = razorpayPaymentId;
     }
 }

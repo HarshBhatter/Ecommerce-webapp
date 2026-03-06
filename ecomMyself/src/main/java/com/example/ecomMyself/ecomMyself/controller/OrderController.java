@@ -26,12 +26,12 @@ public class OrderController {
 //        return "Order placed";
 //    }
 
-    @PostMapping("PlaceOrder")
-    public String placeOrder(@AuthenticationPrincipal UserPrincipal principal)
-    {
-        order_service.placeOrder(principal);
-        return "Order placed";
-    }
+//    @PostMapping("PlaceOrder")
+//    public String placeOrder(@AuthenticationPrincipal UserPrincipal principal)
+//    {
+//        order_service.placeOrder(principal);
+//        return "Order placed";
+//    }
 //    @GetMapping("MyOrders")
 //    public List<Order_response> MyOrders()
 //    {
