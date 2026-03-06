@@ -20,9 +20,9 @@ import java.util.UUID;
 public class PaymentService {
     @Autowired
     private Cart_repo cartRepo;
-    @Value("${razorpay.key-id}")
+    @Value("${razorpay.key.id}")
     private String apikey;
-    @Value("${razorpay.key-secret}")
+    @Value("${razorpay.key.secret}")
     private String apiSecret;
     public RazorPayDetail placeOrder(UserPrincipal principal) throws RazorpayException {
         RazorpayClient razorpay = new RazorpayClient(apikey, apiSecret);
