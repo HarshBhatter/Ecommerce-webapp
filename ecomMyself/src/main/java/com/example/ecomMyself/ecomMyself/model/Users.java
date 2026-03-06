@@ -16,13 +16,14 @@ public class Users {
     private BigDecimal cartValue;
 
     public Users() {
+        version=1;
+        cartValue=BigDecimal.valueOf(0);
     }
 
     public Users(String username, String password) {
         this.username = username;
         this.password = password;
-        version=1;
-        cartValue=BigDecimal.valueOf(0);
+
     }
 
     public int getVersion() {

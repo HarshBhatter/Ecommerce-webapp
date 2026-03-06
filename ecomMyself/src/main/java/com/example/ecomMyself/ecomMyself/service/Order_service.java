@@ -252,6 +252,8 @@ public class Order_service {
     @Transactional
     public void AddToCart(UserPrincipal principal,Order_item_request orderItemRequest)
     {
+        Users user=principal.getUser();
+        Optional<Product> p=productRepo.findById(orderItemRequest.productid());
         Cart cp=cartRepo.findByUserIdAndProductIdAndColorAndSize(principal.getUser().getId(),orderItemRequest.productid(),orderItemRequest.color(),orderItemRequest.size());
         Cart c= cp==null?new Cart():cp;
         c.setUserId(principal.getUser().getId());
@@ -264,6 +266,7 @@ public class Order_service {
         int quantity_available=productSize.get().getQuantity();
         if(c.getQuantity()>quantity_available)
             throw new RuntimeException("Not Availaible");
+        user.setCartValue(user.getCartValue().add(BigDecimal.valueOf(c.getQuantity()).multiply(p.get().getPrice())));
         c.setProductid(orderItemRequest.productid());
         cartRepo.save(c);
     }
@@ -288,6 +291,8 @@ public class Order_service {
 //    }
     @Transactional
     public void RemoveFromCart(UserPrincipal principal,Order_item_request orderItemRequest) {
+        Users user=principal.getUser();
+        Optional<Product> p=productRepo.findById(orderItemRequest.productid());
         Cart cp=cartRepo.findByUserIdAndProductIdAndColorAndSize(principal.getUser().getId(),orderItemRequest.productid(),orderItemRequest.color(),orderItemRequest.size());
         if(cp==null)
             throw new RuntimeException("Not in Cart");
@@ -298,6 +303,7 @@ public class Order_service {
         if(c.getQuantity()==0)
             throw new RuntimeException("Not Applicable");
         c.setQuantity(c.getQuantity()-1);
+        user.setCartValue(user.getCartValue().subtract(BigDecimal.valueOf(c.getQuantity()).multiply(p.get().getPrice())));
         if(c.getQuantity()==0)
             cartRepo.delete(c);
         else {
