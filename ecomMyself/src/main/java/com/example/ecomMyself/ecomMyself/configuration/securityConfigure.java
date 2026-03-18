@@ -39,6 +39,7 @@ public class securityConfigure {
         http.cors(Customizer.withDefaults())
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/Admin/**").hasRole("Admin")
                         .requestMatchers("/PlaceOrder/**","/MyOrders/**" , "/AddToCart/**","/RemoveFromCart/**" , "/Cart/**","/Logout/**").authenticated()
                         .anyRequest().permitAll()
                 )

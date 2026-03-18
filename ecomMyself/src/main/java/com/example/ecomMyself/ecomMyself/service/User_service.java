@@ -1,6 +1,8 @@
 package com.example.ecomMyself.ecomMyself.service;
 
+import com.example.ecomMyself.ecomMyself.model.Roles;
 import com.example.ecomMyself.ecomMyself.model.Users;
+import com.example.ecomMyself.ecomMyself.repository.Roles_repo;
 import com.example.ecomMyself.ecomMyself.repository.User_Repo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -12,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class User_service {
     @Autowired
+    private Roles_repo roles_repo;
+    @Autowired
     private User_Repo user_repo;
     @PersistenceContext
     private EntityManager em;
@@ -22,6 +26,7 @@ public class User_service {
         if (user_repo.existsByUsername(user.getUsername())) {
             throw new RuntimeException("Username already exists. Please choose another one.");
         }
+        user.setRoles(roles_repo.findById(1).orElseThrow());
         user.setPassword(encoder.encode(user.getPassword()));
         System.out.println(user.getPassword());
         return (Users)user_repo.save(user);

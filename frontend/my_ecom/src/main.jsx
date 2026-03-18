@@ -11,11 +11,15 @@ import { Cart } from './Cart/Cart.jsx'
 import { Products } from './Products/Products.jsx'
 import { Individualproduct } from './Individualproduct/Individualproduct.jsx';
 import { IndividualOrder } from './IndividualOrder/IndividualOrder.jsx'
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 import { LoginOauth } from './LoginOauth/loginOauth.jsx'
 import { AddProduct } from './AddProduct/AddProduct.jsx'
 import { CreateAccount } from './CreateAccount/CreateAccount.jsx'
 
+const AdminRoute = ({ children }) => {
+  const role = localStorage.getItem("role");
+  return role === "Admin" ? children : <Navigate to="/" replace />;
+};
 
 export const Layout = () => {//L is capital as layout is html tag
   return (
@@ -36,10 +40,10 @@ const router = createBrowserRouter([
       { path: "/cart", element: <Cart /> },
       { path: "/product/:id", element: <Individualproduct /> },
       { path: "/products/Mens", element: <div><div className='header'>Mens Category</div><Products /></div> },
-      { path: "/products/Womens", element: <div><div className='header' display='flex' justify-content='center' align-items='center' >Womens Category</div><Products /></div>},
+      { path: "/products/Womens", element: <div><div className='header' display='flex' justify-content='center' align-items='center' >Womens Category</div><Products /></div> },
       { path: "/order/:id", element: <IndividualOrder /> },
       { path: "/login/Oauth", element: <LoginOauth /> },
-      { path: "/AddProduct", element: <AddProduct /> },
+      { path: "/AddProduct", element: <AdminRoute><AddProduct /></AdminRoute> },
       { path: "/CreateAccount", element: <CreateAccount /> }
     ],
   },

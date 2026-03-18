@@ -3,6 +3,7 @@ package com.example.ecomMyself.ecomMyself.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Entity
 public class Users {
@@ -14,6 +15,8 @@ public class Users {
     private String password;
     private int version;
     private BigDecimal cartValue;
+    @ManyToOne
+    private Roles role;
 
     public Users() {
         version=1;
@@ -23,7 +26,6 @@ public class Users {
     public Users(String username, String password) {
         this.username = username;
         this.password = password;
-
     }
 
     public int getVersion() {
@@ -73,5 +75,13 @@ public class Users {
 
     public void setCartValue(BigDecimal cartValue) {
         this.cartValue=cartValue;
+    }
+
+    public Roles getRoles() {
+        return role;
+    }
+
+    public void setRoles(Roles roles) {
+        this.role = roles;
     }
 }

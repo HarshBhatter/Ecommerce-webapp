@@ -30,13 +30,16 @@ export const LoginPage = () => {
                         });
 
                         if (response.ok) {
-                            const token = await response.text();
+                            const data=await response.json();
+                            const token = data.token;
+                            const role=data.role;
                             const logintime = Date.now();
                             localStorage.setItem("token", token);
+                            localStorage.setItem("role", role);
                             localStorage.setItem("logintime", logintime);
                             navigate(from, { replace: true });
                             window.location.reload();
-                            console.log(token);
+                            console.log(token + " " + role);
                         }
                         else {
                             alert("Invalid Credentials")

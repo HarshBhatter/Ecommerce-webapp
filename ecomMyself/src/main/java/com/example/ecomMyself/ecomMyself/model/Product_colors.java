@@ -2,6 +2,9 @@ package com.example.ecomMyself.ecomMyself.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Builder;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.engine.internal.Cascade;
 
 import java.util.List;
 
@@ -14,7 +17,7 @@ public class Product_colors {
     private String color;
     @OneToMany(mappedBy = "productColors" , cascade = CascadeType.ALL)
     private List<Product_size> size;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore //to stop infite loop as one table contains key of other table and same for the other table
     private Product product;
 

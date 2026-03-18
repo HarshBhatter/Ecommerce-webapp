@@ -15,7 +15,7 @@ public class Product_size {
     private int id;
     private int quantity;
     private int size;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore //to stop infite loop as one table contains key of other table and same for the other table
     private Product_colors productColors;
 

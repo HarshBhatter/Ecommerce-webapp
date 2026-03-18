@@ -12,6 +12,7 @@ import { Link,NavLink } from 'react-router-dom'
 export function Homepage() {
     console.log(localStorage.getItem("token"));
     console.log(localStorage.getItem("logintime"));
+    console.log(localStorage.getItem("role"));
     return (
         <>
             <div id="Categories" className='Categories'>

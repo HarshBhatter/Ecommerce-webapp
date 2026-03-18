@@ -30,8 +30,10 @@ export const CreateAccount = () => {
                         });
 
                         if (response.ok) {
-                            const token = await response.text();
-                            localStorage.setItem("token", token);
+                            const data = await response.json();
+                            localStorage.setItem("token", data.token);
+                            localStorage.setItem("role", data.role);
+                            localStorage.setItem("logintime", Date.now());
                             navigate(from, { replace: true });
                             window.location.reload();
                             console.log(token);

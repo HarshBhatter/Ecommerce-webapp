@@ -52,15 +52,18 @@ export const AddProduct = () => {
         formData.append("image", image)
 
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/AddProducts`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/Admin/AddProducts`, {
                 method: "POST",
-                // headers: {
-                //   Authorization: `Bearer ${localStorage.getItem("token")}`
-                // },
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`
+                },
                 body: formData
             })
 
-            if (!res.ok) throw new Error("Failed")
+             if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg);
+            }
 
             alert("Product added successfully")
             setSizes([])

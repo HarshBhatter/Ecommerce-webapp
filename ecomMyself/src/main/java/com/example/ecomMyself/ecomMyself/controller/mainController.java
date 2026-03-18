@@ -1,12 +1,16 @@
 package com.example.ecomMyself.ecomMyself.controller;
 
 import com.example.ecomMyself.ecomMyself.model.DTO.AddProduct_request;
+import com.example.ecomMyself.ecomMyself.model.DTO.Auth_response;
 import com.example.ecomMyself.ecomMyself.model.Product;
 import com.example.ecomMyself.ecomMyself.repository.User_Repo;
 import com.example.ecomMyself.ecomMyself.service.*;
 import com.example.ecomMyself.ecomMyself.model.Users;
+import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -43,7 +47,10 @@ public class mainController {
     public ResponseEntity<?> creating_account(@RequestBody Users user) {
         try {
             Users savedUser = user_service.save(user);
-            return ResponseEntity.ok(jwtService.generateToken(user.getUsername(), user.getVersion()));
+            String token=jwtService.generateToken(user.getUsername(), user.getVersion());
+            String role=user.getRoles().getRole();
+            Auth_response authResponse=new Auth_response(token,role);
+            return ResponseEntity.ok(authResponse);
         }
         catch (Exception e)
         {
@@ -54,7 +61,7 @@ public class mainController {
     }
 
     @PostMapping("Login")
-    public String login(@RequestBody Users user) {
+    public ResponseEntity<?> login(@RequestBody Users user) {
         if(user.getPassword()==null)
             throw new BadCredentialsException("Password is required");
         System.out.println("Login");
@@ -63,10 +70,13 @@ public class mainController {
 
         if(authentication.isAuthenticated()) {
             Users user2=user_service.findByUserName(user.getUsername());
-            return jwtService.generateToken(user.getUsername(), user2.getVersion());
+            String token=jwtService.generateToken(user.getUsername(), user2.getVersion());
+            String role=user2.getRoles().getRole();
+            Auth_response authResponse=new Auth_response(token,role);
+            return ResponseEntity.ok(authResponse);
         }
         else
-            return "Login Failed";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login Failed");
     }
 
     @PostMapping("Logout")// 'l' will cause problem as spring security has a method of logout so 'L'
@@ -137,15 +147,17 @@ public class mainController {
                     .body("Product Not Found");
         }
     }
-    @PostMapping("AddProducts")
+    @PostMapping("Admin/AddProducts")
     public ResponseEntity<?> addProducts(@RequestPart AddProduct_request addProductRequest, @RequestPart("image") MultipartFile image)
     {
+        System.out.println("entered Adding products..");
         try{
             Product product=products_service.AddProducts(addProductRequest,image);
             return ResponseEntity.ok(product);
         }
         catch (Exception e)
         {
+            System.out.println(e);
             return ResponseEntity.badRequest().body(e);
         }
     }
