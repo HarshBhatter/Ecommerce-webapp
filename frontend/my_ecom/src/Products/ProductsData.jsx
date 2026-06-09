@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-export const ProductsData = (page) => {
+export const ProductsData = (page, gender) => {
     const location = useLocation();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,9 +12,9 @@ export const ProductsData = (page) => {
 
         let url = `${import.meta.env.VITE_API_URL}/All?page=${page}`;
         console.log("url" + url);
-        if (location.pathname === "/products/Mens") {
+        if (gender === "Men" || location.pathname === "/products/Mens") {
             url = `${import.meta.env.VITE_API_URL}/Mens?page=${page}`;
-        } else if (location.pathname === "/products/Womens") {
+        } else if (gender === "Women" || location.pathname === "/products/Womens") {
             url = `${import.meta.env.VITE_API_URL}/Womens?page=${page}`;
         }
 
@@ -30,7 +30,7 @@ export const ProductsData = (page) => {
                 setLoading(false);
             });
 
-    }, [location.pathname, page]);
+    }, [location.pathname, page, gender]);
 
     return { products, loading, totalpages };
 };

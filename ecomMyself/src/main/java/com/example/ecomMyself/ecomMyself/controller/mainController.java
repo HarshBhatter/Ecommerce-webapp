@@ -2,13 +2,17 @@ package com.example.ecomMyself.ecomMyself.controller;
 
 import com.example.ecomMyself.ecomMyself.model.DTO.AddProduct_request;
 import com.example.ecomMyself.ecomMyself.model.DTO.Auth_response;
+import com.example.ecomMyself.ecomMyself.model.DTO.Individual_Product_Response;
+import com.example.ecomMyself.ecomMyself.model.DTO.Product_Response;
 import com.example.ecomMyself.ecomMyself.model.Product;
 import com.example.ecomMyself.ecomMyself.repository.User_Repo;
 import com.example.ecomMyself.ecomMyself.service.*;
 import com.example.ecomMyself.ecomMyself.model.Users;
+import jakarta.persistence.Lob;
 import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,10 +96,10 @@ public class mainController {
     @GetMapping("All")
     public ResponseEntity<?> products(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
     {
-        System.out.println(page+" "+size);
+//        System.out.println(page+" "+size);
         try {
-            Page<Product> products=products_service.getAll(page,size);
-            System.out.println(products);
+            Page<Product_Response> products=products_service.getAll(page,size);
+//            System.out.println(products);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
@@ -109,7 +113,7 @@ public class mainController {
     public ResponseEntity<?> mensproduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
     {
         try {
-            Page<Product> products=products_service.getMenAll(page,size);
+            Page<Product_Response> products=products_service.getMenAll(page,size);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
@@ -123,7 +127,7 @@ public class mainController {
     public ResponseEntity<?> womensproduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
     {
         try {
-            Page<Product> products=products_service.getWomenAll(page,size);
+            Page<Product_Response> products=products_service.getWomenAll(page,size);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
@@ -137,7 +141,7 @@ public class mainController {
     public ResponseEntity<?> ProductById(@RequestParam int id)
     {
         try {
-            Product products=products_service.productById(id);
+            Individual_Product_Response products=products_service.productById(id);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
@@ -158,6 +162,18 @@ public class mainController {
         catch (Exception e)
         {
             System.out.println(e);
+            return ResponseEntity.badRequest().body(e);
+        }
+    }
+    @GetMapping("Product/image/{id}")
+    public ResponseEntity<?> getImage(@PathVariable int id,@RequestParam(defaultValue ="0") int colorId)
+    {
+        try{
+//            System.out.println(products_service.getImage(id,colorId));
+            return ResponseEntity.ok(products_service.getImage(id,colorId));
+        }
+        catch (Exception e)
+        {
             return ResponseEntity.badRequest().body(e);
         }
     }

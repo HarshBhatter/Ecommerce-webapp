@@ -1,7 +1,6 @@
 package com.example.ecomMyself.ecomMyself.service;
 
-import com.example.ecomMyself.ecomMyself.model.DTO.AddProductSize_request;
-import com.example.ecomMyself.ecomMyself.model.DTO.AddProduct_request;
+import com.example.ecomMyself.ecomMyself.model.DTO.*;
 import com.example.ecomMyself.ecomMyself.model.Product;
 import com.example.ecomMyself.ecomMyself.model.Product_colors;
 import com.example.ecomMyself.ecomMyself.model.Product_size;
@@ -16,6 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import com.example.ecomMyself.ecomMyself.model.DTO.Individual_Product_Response;
+import com.example.ecomMyself.ecomMyself.model.DTO.Individual_Product_Colors_Response;
+import com.example.ecomMyself.ecomMyself.model.DTO.Individual_Product_Size_Response;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -117,29 +119,81 @@ public class Products_Service {
         }
     }
 
-    public Page<Product> getAll(int page,int size)
+    public Page<Product_Response> getAll(int page,int size)
     {
-        System.out.println("service : "+page+" "+size);
+//        System.out.println("service : "+page+" "+size);
         Pageable pageable= ((Pageable) PageRequest.of(page,size));
         Page<Product> products=product_repo.findAll(pageable);
-        return products;
+        return products.map(p ->
+                new Product_Response(
+                        p.getId(),
+                        p.getName(),
+                        p.getPrice(),
+                        "/Product/image/" + p.getId()
+                )
+        );
     }
 
-    public Page<Product> getMenAll(int page,int size) {
+    public Page<Product_Response> getMenAll(int page,int size) {
         Pageable pageable= ((Pageable) PageRequest.of(page,size));
         Page<Product> products=product_repo.findAllByGender("Men",pageable);
-        return products;
+        return products.map(p ->
+                new Product_Response(
+                        p.getId(),
+                        p.getName(),
+                        p.getPrice(),
+                        "/Product/image/" + p.getId()
+                )
+        );
     }
-    public Page<Product> getWomenAll(int page,int size) {
+    public Page<Product_Response> getWomenAll(int page,int size) {
         Pageable pageable= ((Pageable) PageRequest.of(page,size));
         Page<Product> products=product_repo.findAllByGender("Women",pageable);
-        return products;
+        return products.map(p ->
+                new Product_Response(
+                        p.getId(),
+                        p.getName(),
+                        p.getPrice(),
+                        "/Product/image/" + p.getId()
+                )
+        );
     }
 
-    public Product productById(int id) {
+    public Individual_Product_Response productById(int id) {
         Optional<Product> p=product_repo.findById(id);
         if(p.isEmpty())
             throw new RuntimeException("");
-        return p.get();
+        Product p2=p.get();
+        List<Product_colors> pc=p2.getColor();
+        List<Individual_Product_Colors_Response> pcr=new ArrayList<>();
+        for(int i=0;i<pc.size();i++)
+        {
+            Product_colors pci=pc.get(i);
+            List<Individual_Product_Size_Response> productSizeResponses=new ArrayList<>();
+            List<Product_size> ps=pci.getSize();
+            for(Product_size psi:ps)
+                productSizeResponses.add(new Individual_Product_Size_Response(psi.getId(),psi.getQuantity(),psi.getSize()));
+
+            Individual_Product_Colors_Response pcr2=new Individual_Product_Colors_Response(pci.getId(), pci.getColor(),productSizeResponses,"/Product/image/"+p2.getId()+"?colorId="+i);
+            pcr.add(pcr2);
+        }
+        return new Individual_Product_Response(
+                p2.getId(),
+                p2.getName(),
+                p2.getType(),
+                p2.getFit(),
+                p2.getPrice(),
+                p2.getDescription(),
+                p2.getGender(),
+                pcr
+        );
+
+    }
+
+    public Object getImage(int productId, int colorId) {
+        Product p=product_repo.findById(productId).get();
+        Product_colors pc=p.getColor().get(colorId);
+        System.out.println(pc.getSize().size());
+        return pc.getPicture();
     }
 }

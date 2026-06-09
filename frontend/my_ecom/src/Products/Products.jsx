@@ -7,9 +7,9 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { FaRupeeSign } from "react-icons/fa";
 import { useState, useEffect } from 'react';
 
-export const Products = () => {
+export const Products = ({ gender }) => {
     const [page, setPage] = useState(0);
-    const { products=[], loading ,totalpages=0} = ProductsData(page);
+    const { products = [], loading, totalpages = 0 } = ProductsData(page, gender);
     const [timer, setTimer] = useState("00:00:00");
 
     useEffect(() => {
@@ -49,7 +49,7 @@ export const Products = () => {
                 <div className='products'>
                     {products.map((product) => (
                         <NavLink to={`/product/${product.id}`} className='product-card' key={product.id}>
-                            <div className='image'><img src={`data:image/jpeg;base64,${product?.color?.[0]?.picture}`} alt={product.name} /></div>
+                            <div className='image'><img src={import.meta.env.VITE_API_URL + product.imageurl} alt={product.name} /></div>
                             <div className='product-name'>{product.name}</div>
                             <div className='product-price'><FaRupeeSign />{product.price}</div>
                         </NavLink>
@@ -66,7 +66,7 @@ export const Products = () => {
                         <div className='next'>&gt;</div>
                     </div>
                 )}
-                
+
             </div>
         </>
     )
