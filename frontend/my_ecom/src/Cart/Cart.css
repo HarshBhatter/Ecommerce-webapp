@@ -40,7 +40,7 @@ table{
 @media (max-width: 768px) {
     .header {
         font-size: 120%;
-        padding-top:5%;
+        /* padding-top:5%; */
         /* background-color: rgb(179, 179, 179); */
     }
     .Cart .header {

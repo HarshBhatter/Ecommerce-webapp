@@ -1,6 +1,9 @@
 .AboutUs .header{
+    /* padding-top:9.1125px; */
     border-bottom: 2px solid rgb(22, 18, 13);
-    ;
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
 .AboutUs div{
     display: flex;

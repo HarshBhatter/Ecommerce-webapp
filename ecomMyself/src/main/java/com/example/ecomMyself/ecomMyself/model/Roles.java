@@ -1,6 +1,7 @@
 package com.example.ecomMyself.ecomMyself.model;
 
 import jakarta.persistence.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.List;
 

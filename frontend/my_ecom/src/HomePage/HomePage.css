@@ -42,6 +42,7 @@ body{
     color: #1A2530;
     padding: 2%;
     text-align: center;
+    /* justify-content: center; */
     font-size: 200%;
     font-weight:bold;
     font-family:cursive;

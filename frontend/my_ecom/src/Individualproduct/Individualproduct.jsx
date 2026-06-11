@@ -20,6 +20,15 @@ export const Individualproduct = () => {
   useEffect(() => {
     setPic(data?.color?.[0]?.imageurl)
   }, [data.color])
+
+  useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+  setPic("")
+}, [id]);
+
   console.log(data);
   return (
     <>

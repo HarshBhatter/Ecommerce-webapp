@@ -45,7 +45,7 @@ export const Cart = () => {
                         </tr>
                     </thead>
 
-                    {data.map((product, index) => (
+                    {data?.map((product, index) => (
                         <tbody>
                             <tr>
                                 <td>{index + 1}</td>

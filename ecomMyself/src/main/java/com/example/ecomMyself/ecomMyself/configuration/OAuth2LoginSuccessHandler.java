@@ -1,6 +1,7 @@
 package com.example.ecomMyself.ecomMyself.configuration;
 
 import com.example.ecomMyself.ecomMyself.model.Users;
+import com.example.ecomMyself.ecomMyself.repository.Roles_repo;
 import com.example.ecomMyself.ecomMyself.repository.User_Repo;
 import com.example.ecomMyself.ecomMyself.service.JwtService;
 import jakarta.servlet.ServletException;
@@ -19,6 +20,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     @Autowired
     private User_Repo user_repo;
     @Autowired
+    private Roles_repo roles_repo;
+    @Autowired
     private JwtService jwtService;
     @Value("${frontend.url}")
     private String fronendUrl;
@@ -35,6 +38,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             user = new Users();
             user.setUsername(email);
             user.setVersion(0); // default version
+            user.setRoles(roles_repo.findById(1).orElseThrow());
             user_repo.save(user);
         } else {
             user = user_repo.findByUsername(email);
