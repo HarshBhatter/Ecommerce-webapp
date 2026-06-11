@@ -29,7 +29,7 @@ table{
   transform: scale(0.95); /* zoom out */
 }
 .PlaceOrder button:hover{
-    background-color: rgb(73, 60, 41);
+    background-color: #a05845;
 }
 .Cart .quantity div{
     display: flex;
@@ -54,4 +54,11 @@ table{
         gap: 5px;
         align-items: center;
     }
+}
+td .nav-link{
+    color: black;
+    text-decoration: none;
+}
+.nav-link:hover{
+    text-decoration: underline;
 }

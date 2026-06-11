@@ -47,7 +47,7 @@ export const Orders = () => {
             <tbody>
               <tr>
                 <td>{index + 1}</td>
-                <td><NavLink to={`/order/${order.id}`}>{order.orderId}</NavLink></td>
+                <td><NavLink className="nav-link" to={`/order/${order.id}`}>{order.orderId}</NavLink></td>
                 <td>{(new Date(order.orderDate).toLocaleDateString())}</td>
                 <td style={{ color: 'rgb(23, 62, 4)' }}>{order.status}</td>
                 <td>{order.items.map((items)=>(

@@ -13,7 +13,7 @@ export const LoginPage = () => {
     return (
         <div className='overlay'>
             <div className='LoginPage'>
-                <div className='header'>Log in/Sign in</div>
+                <div className='header'>Log in/Sign in<hr></hr></div>
                 <NavLink to={from} className='cross'><RxCross2 /></NavLink>
                 <form onSubmit={async (e) => {
                     e.preventDefault();
@@ -61,14 +61,14 @@ export const LoginPage = () => {
 
                 </form>
 
-                <div>do not have an account?<a href="#" onClick={()=>{
+                <div style={{ color: '#09223c' }}>do not have an account?<a href="#" onClick={()=>{
                     navigate('/CreateAccount',
                         {state: {from: from},
                          replace: true }
                     )
                 }}>Create Account</a></div>
 
-                <div >OR</div>
+                <div style={{ color: '#09223c' }}>OR</div>
 
                 <div className='google' onClick={async () => {
                     window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`

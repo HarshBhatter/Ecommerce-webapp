@@ -1,5 +1,5 @@
 body{
-    background-color: rgb(108, 93, 74)
+    background-color: #EAEFF2
 }
 .Categories{
     display: flex;
@@ -39,7 +39,7 @@ body{
     background-color: #c46b73;
 }
 .header{
-    color: rgba(17, 9, 0, 0.615);
+    color: #1A2530;
     padding: 2%;
     text-align: center;
     font-size: 200%;
@@ -50,6 +50,12 @@ body{
 }
 
 @media (max-width: 768px) {
+    .Allproducts {
+        min-height:200px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
     .Categories {
         width: 85%;
     }

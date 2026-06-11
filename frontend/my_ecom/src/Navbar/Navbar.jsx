@@ -50,7 +50,7 @@ export const Navbar = () => {
     <>
       <div className="navbar">
         <div className="left-navbar">
-          <div><NavLink to="/#Categories"><RiShoppingBag4Fill /></NavLink></div>
+          <div><NavLink to="/"><RiShoppingBag4Fill /></NavLink></div>
           <div><NavLink to="/#about-us" >About Us</NavLink><hr></hr></div>
           <div><NavLink to="/#contact-us">Contact Us</NavLink><hr /></div>
         </div>

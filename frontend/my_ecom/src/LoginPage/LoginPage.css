@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(26, 37, 48, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,10 +17,10 @@
     gap: 20px;
     justify-content: center;
     align-items: center;
-    background: rgb(144, 137, 137);
+    background: #e4e8ee;
     padding: 20px;
     border-radius: 2%;
-    box-shadow: 0 0 10px rgba(245, 248, 248, 0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     width: 70%;
     height: 70%;
 }
@@ -34,29 +34,30 @@ label{
     display: flex;
     flex-direction: column;
     align-items: center;
-    color:rgb(73, 60, 41);
+    color:#4A5568;
 }
 button{
     padding: 10px;
-    background-color:  rgb(85, 69, 51);
+    background-color: #E07A5F;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 button:hover{
-    background-color: rgb(73, 60, 41);
+    background-color: #a05845
 }
 input{
     padding: 8px;
-    border: 1px solid grey;
+    border: 1px solid #CBD5E1;
     border-radius: 5px;
     width: 300px;
-    background-color: rgb(129, 120, 105);
+    background-color: #FFFFFF;
+    color: #1F2421;
     cursor: text;
 }
 input:hover{
-    border: 2px solid rgb(100, 85, 60);
+    border: 1px solid #4A76A8;
     transition: transform 0.2s;
 }
 input:focus{
@@ -64,7 +65,7 @@ input:focus{
     border: 2px solid rgb(73, 60, 41);
 }
 .LoginPage a,.LoginPage a:visited{
-    color: blue;
+    color: #E07A5F;
     cursor: pointer;
 }
 .LoginPage a:hover{
@@ -75,15 +76,16 @@ input:focus{
     align-items: center;
     gap: 10px;
     padding: 10px;
-    border: 2px solid rgb(73, 60, 41);
+    margin-bottom: 20px;
+    border: 2px solid #CBD5E1;
     border-radius: 5px;
     cursor: pointer;
     width: fit-content;
-    background-color: rgb(85, 69, 51);
+    background-color:#FFFFFF;
     transition: transform 0.1s ease;
 }
 .google:hover{
-    background-color: rgb(73, 60, 41);
+    background-color:#b6c0cc;
 }
 .google:active {
   transform: scale(0.95); /* zoom out */   
@@ -97,8 +99,9 @@ input:focus{
     cursor: pointer;
 }
 .cross svg{
-    color :black
+    color :#1A2530;
 }
+
 @media (max-width: 768px) {
     .overlay .LoginPage {
         width: 90%;

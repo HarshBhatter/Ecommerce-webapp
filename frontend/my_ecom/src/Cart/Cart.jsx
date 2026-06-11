@@ -49,7 +49,7 @@ export const Cart = () => {
                         <tbody>
                             <tr>
                                 <td>{index + 1}</td>
-                                <td><NavLink to={`/product/${product.productId}`}>{product.name}</NavLink></td>
+                                <td><NavLink className="nav-link" to={`/product/${product.productId}`}>{product.name}</NavLink></td>
                                 <td>{product.color}</td>
                                 <td>{product.size}</td>
                                 <td className='quantity'><div> <FaMinus cursor="pointer" onClick={
