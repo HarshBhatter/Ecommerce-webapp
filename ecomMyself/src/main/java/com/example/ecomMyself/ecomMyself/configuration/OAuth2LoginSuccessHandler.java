@@ -46,7 +46,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 //        response.getWriter().write("{ \"token\": \"Bearer " + token + "\" }");
 //        response.setContentType("text/plain"); //as custom is also sending plain data
 //        response.getWriter().write(token); // no "Bearer " prefix
-        response.sendRedirect(fronendUrl+"/login/Oauth?token=" + token);
+        response.sendRedirect(fronendUrl+"login/Oauth?token=" + token);
 
     }
 }
