@@ -99,3 +99,13 @@ input:focus{
 .cross svg{
     color :black
 }
+@media (max-width: 768px) {
+    .overlay .LoginPage {
+        width: 90%;
+        height: auto;
+        padding: 10px;
+    }
+    input {
+        width: 100%;
+    }
+}

@@ -13,3 +13,16 @@
     font-size: 120%;
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .AboutUs .info {
+        font-size: 110%;
+        margin: 5% 2%;
+    }
+}
+@media (max-width: 480px) {
+    .AboutUs .info {
+        font-size: 100%;
+        margin: 5% 2%;
+    }
+}

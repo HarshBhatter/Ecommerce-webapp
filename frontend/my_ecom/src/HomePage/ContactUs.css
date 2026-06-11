@@ -8,7 +8,7 @@
     border-bottom: 2px solid rgb(22, 18, 13);
 }
 .ContactUs .info{
-    margin-top: 2%;
+    margin-top: 0.4%;
     display: flex;
     flex-direction: column;
     gap: 12px; 
@@ -25,4 +25,20 @@
 .ContactUs .links{
     display: flex;
     gap: 2%;
+}
+
+@media (max-width: 768px) {
+    .ContactUs .links {
+        gap: 10px;
+    }
+    .ContactUs .info {
+        font-size: 110%;
+        padding: 0 15px;
+    }
+}
+@media (max-width: 480px) {
+    .ContactUs .info {
+        font-size: 100%;
+        padding: 0 10px;
+    }
 }

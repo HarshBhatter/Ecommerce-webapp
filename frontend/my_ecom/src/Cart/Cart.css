@@ -1,6 +1,9 @@
 table{
     width: 100%;
     border-collapse: collapse;
+    /* display: block; */
+    overflow-x: auto;
+    
 }
 .Cart .header{
     font-weight: bold;
@@ -28,9 +31,27 @@ table{
 .PlaceOrder button:hover{
     background-color: rgb(73, 60, 41);
 }
-.Cart .quantity{
+.Cart .quantity div{
     display: flex;
-    justify-content: space-between; 
-    border: none;
-    border-bottom: 1px solid black;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+@media (max-width: 768px) {
+    .header {
+        font-size: 120%;
+        padding-top:5%;
+        /* background-color: rgb(179, 179, 179); */
+    }
+    .Cart .header {
+        font-size: 100%;
+    }
+    .Cart th, .Cart td {
+        font-size: 12px;
+        padding: 5px;
+    }
+    .Cart .quantity {
+        gap: 5px;
+        align-items: center;
+    }
 }

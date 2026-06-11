@@ -43,5 +43,18 @@
 .products a{
     text-decoration: none;
     color: black;
+}
 
+@media (max-width: 768px) {
+    .products {
+        padding: 2px;
+        gap: 1px;
+    }
+    .Pages {
+        gap: 3px;
+    }
+    .Pages .previous, .Pages .next, .Pages .page-numbers .number {
+        padding: 8px;
+        font-size: 10px;
+    }
 }

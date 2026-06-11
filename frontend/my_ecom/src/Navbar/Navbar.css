@@ -73,4 +73,28 @@ a:focus {
   text-decoration: none;
   font-size: 25px;
 }
-
+@media (max-width: 768px) {
+  .navbar {
+    padding: 2%;
+  }
+  .left-navbar div,
+  .right-navbar div {
+    font-size: 16px;
+  }
+}
+@media (max-width: 480px) {
+  .navbar {
+    padding: 1%;
+    padding-top: 3%;
+  }
+  .left-navbar,
+  .right-navbar{
+    gap: 15px;
+  }
+  .left-navbar div,.right-navbar div{
+    font-size: 14px;
+  }
+  .right-navbar svg{
+    font-size: 16px;
+  }
+}

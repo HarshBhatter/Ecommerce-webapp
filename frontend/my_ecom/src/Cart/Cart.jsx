@@ -27,7 +27,7 @@ export const Cart = () => {
     console.log(data);
 
     if (data.length == 0)
-        return <div className='header'>Your Cart is Empty</div>
+        return <div className='header'>Your Cart is Empty!</div>
 
     return (
         <>
@@ -52,7 +52,7 @@ export const Cart = () => {
                                 <td><NavLink to={`/product/${product.productId}`}>{product.name}</NavLink></td>
                                 <td>{product.color}</td>
                                 <td>{product.size}</td>
-                                <td className='quantity'><FaMinus cursor="pointer" onClick={
+                                <td className='quantity'><div> <FaMinus cursor="pointer" onClick={
                                     () => {
                                         fetch(`${import.meta.env.VITE_API_URL}/RemoveFromCart`, {
                                             method: 'POST',
@@ -85,7 +85,7 @@ export const Cart = () => {
                                             })
                                         }).then(() => window.location.reload())
                                             .then(alert("Added To Cart"))
-                                    }} /></td>
+                                    }} /></div></td>
                                 <td><FaRupeeSign />{product.total}</td>
                             </tr>
                         </tbody>

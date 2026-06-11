@@ -29,7 +29,7 @@ export const Orders = () => {
   }
   return (
     <>
-      <div className='header'>My Orders</div>
+      <div className='header' >My Orders</div>
       <div className='Cart'><hr />
         <table>
           <thead>
