@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -19,6 +20,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     private User_Repo user_repo;
     @Autowired
     private JwtService jwtService;
+    @Value("${frontend.url}")
+    private String fronendUrl;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
@@ -43,7 +46,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 //        response.getWriter().write("{ \"token\": \"Bearer " + token + "\" }");
 //        response.setContentType("text/plain"); //as custom is also sending plain data
 //        response.getWriter().write(token); // no "Bearer " prefix
-        response.sendRedirect("http://localhost:5173/login/Oauth?token=" + token);
+        response.sendRedirect(fronendUrl+"/login/Oauth?token=" + token);
 
     }
 }
