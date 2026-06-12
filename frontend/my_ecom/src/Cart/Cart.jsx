@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Cart.css'
 import { CartData } from './CartData'
 import { NavLink } from 'react-router-dom';
@@ -29,6 +29,8 @@ export const Cart = () => {
     if (data.length == 0)
         return <div className='header'>Your Cart is Empty!</div>
 
+    const total = data.reduce((acc, item) => acc + (item.total || 0), 0);
+
     return (
         <>
             <div className='header'>Your Cart</div>
@@ -44,9 +46,8 @@ export const Cart = () => {
                             <th>Total</th>
                         </tr>
                     </thead>
-
-                    {data?.map((product, index) => (
-                        <tbody>
+                    <tbody>
+                        {data?.map((product, index) => (
                             <tr>
                                 <td>{index + 1}</td>
                                 <td><NavLink className="nav-link" to={`/product/${product.productId}`}>{product.name}</NavLink></td>
@@ -88,85 +89,93 @@ export const Cart = () => {
                                     }} /></div></td>
                                 <td><FaRupeeSign />{product.total}</td>
                             </tr>
-                        </tbody>
-                    ))}
-
-
+                        ))}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td className="total"><FaRupeeSign />{total}</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             <div className="PlaceOrder">
                 <button
                     onClick={async () => {
 
-                    try {
-                        // 1️⃣ Create Razorpay Order from backend
-                        const res = await fetch(
-                        `${import.meta.env.VITE_API_URL}/razorpay/payment`,
-                        {
-                            method: "POST",
-                            headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${localStorage.getItem("token")}`
-                            }
-                        }
-                        );
-
-                        const data = await res.json();
-
-                        const options = {
-                        key: data.key,
-                        amount: data.amount,
-                        currency: "INR",
-                        order_id: data.orderId,
-                        name: "Your Store",
-                        description: "Order Payment",
-
-                        // ✅ SUCCESS HANDLER
-                        handler: async function (response) {
-                            // console.log("Full response:", response);
-
-                            const res2=await fetch(
-                            `${import.meta.env.VITE_API_URL}/razorpay/confirm`,
-                            {
-                                method: "POST",
-                                headers: {
-                                "Content-Type": "application/json",
-                                "Authorization": `Bearer ${localStorage.getItem("token")}`
-                                },
-                                body: JSON.stringify({
-                                razorpayOrderId: response.razorpay_order_id,
-                                razorpayPaymentId: response.razorpay_payment_id,
-                                razorpaySignature: response.razorpay_signature
-                                })
-                            }
+                        try {
+                            // 1️⃣ Create Razorpay Order from backend
+                            const res = await fetch(
+                                `${import.meta.env.VITE_API_URL}/razorpay/payment`,
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "Authorization": `Bearer ${localStorage.getItem("token")}`
+                                    }
+                                }
                             );
-                            const result = await res2.text();
-                            alert(result);
-                            window.location.reload();
+
+                            const data = await res.json();
+
+                            const options = {
+                                key: data.key,
+                                amount: data.amount,
+                                currency: "INR",
+                                order_id: data.orderId,
+                                name: "Your Store",
+                                description: "Order Payment",
+
+                                // ✅ SUCCESS HANDLER
+                                handler: async function (response) {
+                                    // console.log("Full response:", response);
+
+                                    const res2 = await fetch(
+                                        `${import.meta.env.VITE_API_URL}/razorpay/confirm`,
+                                        {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json",
+                                                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                                            },
+                                            body: JSON.stringify({
+                                                razorpayOrderId: response.razorpay_order_id,
+                                                razorpayPaymentId: response.razorpay_payment_id,
+                                                razorpaySignature: response.razorpay_signature
+                                            })
+                                        }
+                                    );
+                                    const result = await res2.text();
+                                    alert(result);
+                                    window.location.reload();
+                                }
+                            };
+
+                            const rzp = new window.Razorpay(options);
+
+                            // ❌ FAILURE HANDLER
+                            rzp.on("payment.failed", function () {
+                                alert("Payment Failed!");
+                            });
+
+                            // 3️⃣ Open popup
+                            rzp.open();
+
+                        } catch (error) {
+                            alert("Something went wrong!");
+                            console.error(error);
                         }
-                        };
-
-                        const rzp = new window.Razorpay(options);
-
-                        // ❌ FAILURE HANDLER
-                        rzp.on("payment.failed", function () {
-                        alert("Payment Failed!");
-                        });
-
-                        // 3️⃣ Open popup
-                        rzp.open();
-
-                    } catch (error) {
-                        alert("Something went wrong!");
-                        console.error(error);
-                    }
 
                     }}
                 >
                     Place Order
                 </button>
-                </div>
+            </div>
 
-    </>
+        </>
     )
 }

@@ -17,6 +17,16 @@ export const Individualproduct = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [pic, setPic] = useState("");
+  const [quantity, setQuantity] = useState(0);
+  useEffect(() => {
+    if (selectedColor && selectedSize) {
+      const colorData = data?.color?.find(c => c.color === selectedColor);
+      const sizeData = colorData?.size?.find(s => s.size === selectedSize);
+      setQuantity(sizeData ? sizeData.quantity : 0);
+    } else {
+      setQuantity(0);
+    }
+  }, [selectedColor, selectedSize, data.color]);
   useEffect(() => {
     setPic(data?.color?.[0]?.imageurl)
   }, [data.color])
@@ -71,7 +81,11 @@ export const Individualproduct = () => {
                 ))
               )
             }
+            
           </div>
+          {
+            selectedColor != null && selectedSize != null && <div style={{color:quantity<=5? 'red':'green'}}>{data?.color?.find(c => c.color === selectedColor)?.size?.find(s => s.size === selectedSize)?.quantity} pieces in stock!</div>
+                }
           {
             <div className='add-to-cart-button' onClick={
               () => {

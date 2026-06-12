@@ -94,7 +94,7 @@ public class mainController {
         return "logged out";
     }
     @GetMapping("All")
-    public ResponseEntity<?> products(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
+    public ResponseEntity<?> products(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "8") int size)
     {
 //        System.out.println(page+" "+size);
         try {

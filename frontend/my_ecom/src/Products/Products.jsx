@@ -60,7 +60,7 @@ export const Products = ({ gender }) => {
                         <div className='previous'>&lt;</div>
                         <div className='page-numbers'>
                             {Array.from({ length: totalpages }, (_, i) => (
-                                <div className='number' key={i + 1} onClick={() => setPage(i)}>{i + 1}</div>
+                                <div className='number' style={{ backgroundColor: page === i ? 'rgb(144, 168, 187)' : 'rgb(179, 179, 179)' }} key={i + 1} onClick={() => setPage(i)}>{i + 1}</div>
                             ))}
                         </div>
                         <div className='next'>&gt;</div>
