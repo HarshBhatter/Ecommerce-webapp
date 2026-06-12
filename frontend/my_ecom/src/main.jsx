@@ -15,6 +15,8 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 import { LoginOauth } from './LoginOauth/loginOauth.jsx'
 import { AddProduct } from './AddProduct/AddProduct.jsx'
 import { CreateAccount } from './CreateAccount/CreateAccount.jsx'
+import { PlaceOrder} from './PlaceOrder/PlaceOrder.jsx'
+import {CheckOut} from './CheckOut/CheckOut.jsx'
 
 const AdminRoute = ({ children }) => {
   const role = localStorage.getItem("role");
@@ -37,6 +39,8 @@ const router = createBrowserRouter([
       { path: "/", element: <Homepage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/orders", element: <Orders /> },
+      { path:"/PlaceOrder",element:<PlaceOrder />},
+      {path :"/Checkout",element:<CheckOut/>},
       { path: "/cart", element: <Cart /> },
       { path: "/product/:id", element: <Individualproduct /> },
       { path: "/products/Mens", element: <div><div className='header'>Mens Category</div><hr color='black'></hr><Products /></div> },

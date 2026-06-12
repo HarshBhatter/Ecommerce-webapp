@@ -1,44 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import './Cart.css'
-import { CartData } from './CartData'
-import { NavLink } from 'react-router-dom';
-import { FaMinus } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa";
+import React from 'react'
+import "../Cart/CartData"
+import './CheckOut.css'
 import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { FaRupeeSign } from "react-icons/fa";
-import { CartBody } from './CartBody';
+import { CartBody } from "../Cart/CartBody";
+import { CartData } from '../Cart/CartData';
+import { useEffect } from 'react';
 
-export const Cart = () => {
+export const CheckOut = () => {
 
     const location = useLocation();
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (localStorage.getItem('token') === null) {
-            navigate('/login',
-                {
-                    state: { from: location },
-                    replace: true
-                }
-            );
-        }
-    },);
-
     const data = CartData();
-    console.log(data);
-
-    if (data.length == 0)
-        return <div className='header'>Your Cart is Empty!</div>
-
     const total = data.reduce((acc, item) => acc + (item.total || 0), 0);
-
+    const details=location.state || JSON.parse(localStorage.getItem("shippingDetails"));
+    
+    useEffect(() => {
+            if (localStorage.getItem('token') === null) {
+                navigate('/login',
+                    {
+                        state: { from: '/Cart' },
+                        replace: true
+                    }
+                );
+            }
+    },);
     return (
-        <>
-            <div className='header'>Your Cart</div>
-            <div><CartBody data={data}/></div>
-            <div className="PlaceOrder">
-                <button onClick={() => navigate('/PlaceOrder')}>place order</button>
-                {/* <button
+        <div className="CheckOut">
+            <div className="header">~Summary~</div>
+            <div className="shippingDetails">
+                <h3>Address :-</h3>
+                <br />
+                <div>{details.address}</div>
+                <div>{details.city}</div>
+                <div>{details.state}</div>
+                <div>{details.pincode}</div>
+                <br></br>
+                <h3>Email Id:-</h3>
+                <br></br>
+                <div>{details.email}</div>
+            </div>
+            <div><CartBody data={data} /></div>
+            <div className='pay'>
+            <button 
                     onClick={async () => {
 
                         try {
@@ -105,11 +107,8 @@ export const Cart = () => {
                         }
 
                     }}
-                >
-                    Place Order
-                </button> */}
-            </div>
+                >Pay</button></div>
+        </div>
 
-        </>
     )
 }
