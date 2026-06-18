@@ -1,13 +1,16 @@
 package com.example.ecomMyself.ecomMyself.controller;
 
+import com.example.ecomMyself.ecomMyself.Coupons.Service.CouponService;
 import com.example.ecomMyself.ecomMyself.model.Cart;
 import com.example.ecomMyself.ecomMyself.model.DTO.Cart_response;
 import com.example.ecomMyself.ecomMyself.model.DTO.Order_item_request;
 import com.example.ecomMyself.ecomMyself.model.DTO.Order_request;
 import com.example.ecomMyself.ecomMyself.model.DTO.Order_response;
+import com.example.ecomMyself.ecomMyself.service.OrderSummaryService;
 import com.example.ecomMyself.ecomMyself.service.Order_service;
 import com.example.ecomMyself.ecomMyself.service.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +22,10 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private Order_service order_service;
-//    @PostMapping("PlaceOrder")
-//    public String placeOrder()
-//    {
-//        order_service.placeOrder();
-//        return "Order placed";
-//    }
-
-//    @PostMapping("PlaceOrder")
-//    public String placeOrder(@AuthenticationPrincipal UserPrincipal principal)
-//    {
-//        order_service.placeOrder(principal);
-//        return "Order placed";
-//    }
-//    @GetMapping("MyOrders")
-//    public List<Order_response> MyOrders()
-//    {
-//        return order_service.MyOrders();
-//    }
-
+    @Autowired
+    private CouponService couponService;
+    @Autowired
+    private OrderSummaryService orderSummaryService;
     @GetMapping("MyOrders")
     public ResponseEntity<?> getOrder(@AuthenticationPrincipal UserPrincipal principal)
     {
@@ -81,5 +69,35 @@ public class OrderController {
     {
         Cart_response list[]= order_service.cart(principal.getUser().getId());
         return ResponseEntity.ok(list);
+    }
+    @PostMapping("ApplyCoupon")
+    public ResponseEntity<?> applyCoupon(@AuthenticationPrincipal UserPrincipal principal,@RequestBody long couponId)
+    {
+        try {
+            return ResponseEntity.ok(couponService.apply(principal.getUser(),couponId));
+        }catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("Coupons")
+    public ResponseEntity<?> getCoupons(@AuthenticationPrincipal UserPrincipal principal)
+    {
+        try {
+            return ResponseEntity.ok(couponService.getAllCoupons(principal.getUser()));
+        }catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("OrderSummary")
+    public ResponseEntity<?> OrderSummary(@AuthenticationPrincipal UserPrincipal principal)
+    {
+        try {
+            return ResponseEntity.ok(orderSummaryService.getOrderSummary(principal.getUser()));
+        }catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
