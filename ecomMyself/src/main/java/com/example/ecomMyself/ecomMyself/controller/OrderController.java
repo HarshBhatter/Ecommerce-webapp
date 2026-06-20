@@ -1,16 +1,16 @@
 package com.example.ecomMyself.ecomMyself.controller;
 
 import com.example.ecomMyself.ecomMyself.Coupons.Service.CouponService;
-import com.example.ecomMyself.ecomMyself.model.Cart;
-import com.example.ecomMyself.ecomMyself.model.DTO.Cart_response;
-import com.example.ecomMyself.ecomMyself.model.DTO.Order_item_request;
-import com.example.ecomMyself.ecomMyself.model.DTO.Order_request;
-import com.example.ecomMyself.ecomMyself.model.DTO.Order_response;
+//import com.example.ecomMyself.ecomMyself.DTO.AddressEmail;
+import com.example.ecomMyself.ecomMyself.DTO.Cart_response;
+import com.example.ecomMyself.ecomMyself.DTO.Order_item_request;
+import com.example.ecomMyself.ecomMyself.DTO.Order_response;
+import com.example.ecomMyself.ecomMyself.Embedable.Address;
+import com.example.ecomMyself.ecomMyself.DTO.*;
 import com.example.ecomMyself.ecomMyself.service.OrderSummaryService;
 import com.example.ecomMyself.ecomMyself.service.Order_service;
 import com.example.ecomMyself.ecomMyself.service.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -96,6 +96,19 @@ public class OrderController {
         try {
             return ResponseEntity.ok(orderSummaryService.getOrderSummary(principal.getUser()));
         }catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("setAddressEmail")
+    public ResponseEntity<?> setAddressEmail(@AuthenticationPrincipal UserPrincipal principal,@RequestBody Address address)
+    {
+        try {
+            orderSummaryService.setAddressEmail(principal.getUser(), address);
+            return ResponseEntity.ok("saved Address and Email");
+        }
+        catch (Exception e)
         {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

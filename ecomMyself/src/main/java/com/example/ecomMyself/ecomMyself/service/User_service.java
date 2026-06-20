@@ -1,5 +1,7 @@
 package com.example.ecomMyself.ecomMyself.service;
 
+import com.example.ecomMyself.ecomMyself.Notification.Enum.NotificationCategory;
+import com.example.ecomMyself.ecomMyself.Notification.Service.NotificationService;
 import com.example.ecomMyself.ecomMyself.model.Roles;
 import com.example.ecomMyself.ecomMyself.model.Users;
 import com.example.ecomMyself.ecomMyself.repository.Roles_repo;
@@ -20,16 +22,23 @@ public class User_service {
     @PersistenceContext
     private EntityManager em;
     private BCryptPasswordEncoder encoder=new BCryptPasswordEncoder(12);
-
+    @Autowired
+    private NotificationService notificationService;
+    @Transactional
     public Users save(Users user)
     {
         if (user_repo.existsByUsername(user.getUsername())) {
             throw new RuntimeException("Username already exists. Please choose another one.");
         }
+        if(user_repo.existsByEmail(user.getEmail()))
+            throw new RuntimeException("An account with this Email exists!");
+
         user.setRoles(roles_repo.findById(1).orElseThrow());
         user.setPassword(encoder.encode(user.getPassword()));
         System.out.println(user.getPassword());
-        return (Users)user_repo.save(user);
+        Users saveduser=(Users)user_repo.save(user);
+        notificationService.notify(NotificationCategory.NEW_USER,saveduser);
+        return saveduser;
     }
     @Transactional
     public void changeVersion(String username)

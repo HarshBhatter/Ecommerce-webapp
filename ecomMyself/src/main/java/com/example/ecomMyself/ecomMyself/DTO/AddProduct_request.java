@@ -1,6 +1,4 @@
-package com.example.ecomMyself.ecomMyself.model.DTO;
-
-import org.springframework.web.multipart.MultipartFile;
+package com.example.ecomMyself.ecomMyself.DTO;
 
 import java.math.BigDecimal;
 import java.util.List;

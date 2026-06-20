@@ -1,7 +1,8 @@
 package com.example.ecomMyself.ecomMyself.service;
 
 import com.example.ecomMyself.ecomMyself.Coupons.Service.CouponService;
-import com.example.ecomMyself.ecomMyself.model.DTO.AddressEmail;
+//import com.example.ecomMyself.ecomMyself.DTO.AddressEmail;
+import com.example.ecomMyself.ecomMyself.Embedable.Address;
 import com.example.ecomMyself.ecomMyself.model.OrderSummary;
 import com.example.ecomMyself.ecomMyself.model.Users;
 import com.example.ecomMyself.ecomMyself.repository.OrderSummary_repo;
@@ -51,14 +52,17 @@ public class OrderSummaryService {
         orderSummary_repo.save(orderSummary2);
         return orderSummary2;
     }
-    public void setAddressEmail(Users user, AddressEmail addressEmail)
+    public void setAddressEmail(Users user, Address address)
     {
         OrderSummary orderSummary=orderSummary_repo.findByUser(user).get();
-        orderSummary.setStreet(addressEmail.street());
-        orderSummary.setCity(addressEmail.city());
-        orderSummary.setState(addressEmail.state());
-        orderSummary.setPincode(addressEmail.pincode());
-        orderSummary.setEmailId(addressEmail.email());
+        orderSummary.setAddress(address);
         orderSummary_repo.save(orderSummary);
+    }
+    public void orderPlaced(Users user)
+    {
+        OrderSummary orderSummary = orderSummary_repo.findByUser(user).get();
+        if(orderSummary.getCoupon()!=null)
+            couponService.setCouponUsage(user,orderSummary.getCoupon().getId());
+        delete(user);
     }
 }

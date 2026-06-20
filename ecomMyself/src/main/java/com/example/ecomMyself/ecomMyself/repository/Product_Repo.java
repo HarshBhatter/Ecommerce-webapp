@@ -1,6 +1,5 @@
 package com.example.ecomMyself.ecomMyself.repository;
 
-import com.example.ecomMyself.ecomMyself.model.DTO.Product_Response;
 import com.example.ecomMyself.ecomMyself.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 @Repository

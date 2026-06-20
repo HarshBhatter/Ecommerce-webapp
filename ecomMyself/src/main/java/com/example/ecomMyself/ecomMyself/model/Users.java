@@ -17,15 +17,17 @@ public class Users {
     private BigDecimal cartValue;
     @ManyToOne
     private Roles role;
-
+    @Column(unique = true)
+    private String email;
     public Users() {
         version=1;
         cartValue=BigDecimal.valueOf(0);
     }
 
-    public Users(String username, String password) {
+    public Users(String username, String password,String email) {
         this.username = username;
         this.password = password;
+        this.email=email;
     }
 
     public int getVersion() {
@@ -42,6 +44,7 @@ public class Users {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", email='"+email+'\''+
                 '}';
     }
 
@@ -83,5 +86,13 @@ public class Users {
 
     public void setRoles(Roles roles) {
         this.role = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -13,9 +13,11 @@ import com.example.ecomMyself.ecomMyself.repository.OrderSummary_repo;
 import com.example.ecomMyself.ecomMyself.repository.User_Repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -94,5 +96,13 @@ public class CouponService {
         System.out.println(coupon.getDiscountType()+" "+amount_to_deduct);
         return "removed";
 
+    }
+    public void setCouponUsage(Users user,Long couponId)
+    {
+        Coupon coupon=couponRepo.findById(couponId).get();
+        HashMap<Long,Integer> usage_map=coupon.getUsage();
+        usage_map.put((long)user.getId(),usage_map.getOrDefault(user.getId(),0)+1);
+        coupon.setUsage(usage_map);
+        couponRepo.save(coupon);
     }
 }

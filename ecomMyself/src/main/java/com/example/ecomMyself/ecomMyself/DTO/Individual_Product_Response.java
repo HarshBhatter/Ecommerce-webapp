@@ -1,6 +1,4 @@
-package com.example.ecomMyself.ecomMyself.model.DTO;
-
-import com.example.ecomMyself.ecomMyself.model.Product_colors;
+package com.example.ecomMyself.ecomMyself.DTO;
 
 import java.math.BigDecimal;
 import java.util.List;

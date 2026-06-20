@@ -1,4 +1,4 @@
-package com.example.ecomMyself.ecomMyself.model.DTO;
+package com.example.ecomMyself.ecomMyself.DTO;
 
 import java.math.BigDecimal;
 

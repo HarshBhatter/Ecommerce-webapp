@@ -1,7 +1,6 @@
 package com.example.ecomMyself.ecomMyself.repository;
 
 import com.example.ecomMyself.ecomMyself.model.Cart;
-import com.example.ecomMyself.ecomMyself.model.DTO.Order_item_request;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

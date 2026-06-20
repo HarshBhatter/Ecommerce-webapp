@@ -4,6 +4,7 @@ import com.example.ecomMyself.ecomMyself.model.Users;
 import com.example.ecomMyself.ecomMyself.repository.Roles_repo;
 import com.example.ecomMyself.ecomMyself.repository.User_Repo;
 import com.example.ecomMyself.ecomMyself.service.JwtService;
+import com.example.ecomMyself.ecomMyself.service.User_service;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 @Component
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+    @Autowired
+    private User_service user_service;
     @Autowired
     private User_Repo user_repo;
     @Autowired
@@ -35,11 +38,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         }
         Users user;
         if (!user_repo.existsByUsername(email)) {
-            user = new Users();
-            user.setUsername(email);
-            user.setVersion(0); // default version
-            user.setRoles(roles_repo.findById(1).orElseThrow());
-            user_repo.save(user);
+            user=user_service.save(new Users(email,null,email));
         } else {
             user = user_repo.findByUsername(email);
         }

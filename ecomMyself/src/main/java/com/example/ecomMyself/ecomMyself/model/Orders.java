@@ -1,5 +1,6 @@
 package com.example.ecomMyself.ecomMyself.model;
 
+import com.example.ecomMyself.ecomMyself.Embedable.Address;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -19,20 +20,35 @@ public class Orders {
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<Order_items> orderItems;
     private BigDecimal total;
+    private String couponCodeApplied;
+    private BigDecimal discount;
+    private BigDecimal discountedTotal;
     private String razorpayPaymentId;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "street")),
+            @AttributeOverride(name = "city", column = @Column(name = "city")),
+            @AttributeOverride(name = "state", column = @Column(name = "state")),
+            @AttributeOverride(name = "pincode", column = @Column(name = "pincode"))
+    })
+    private Address address;
 
     public Orders() {
     }
 
-    public Orders(Long id, String orderId,int userId, String status, LocalDate orderDate, List<Order_items> orderItems,BigDecimal total,String razorpayPaymentId) {
+    public Orders(Long id, String orderId,int userId, String status, LocalDate orderDate, List<Order_items> orderItems,BigDecimal total,String razorpayPaymentId,Address address,BigDecimal discount,BigDecimal discountedTotal,String couponCodeApplied) {
         this.id = id;
         this.orderId = orderId;
         this.userId = userId;
         this.status = status;
         this.orderDate = orderDate;
         this.orderItems = orderItems;
-        this.total=total;
         this.razorpayPaymentId=razorpayPaymentId;
+        this.address=address;
+        this.couponCodeApplied=couponCodeApplied;
+        this.total=total;
+        this.discount=discount;
+        this.discountedTotal=discountedTotal;
     }
 
     public BigDecimal getTotal() {
@@ -97,5 +113,37 @@ public class Orders {
 
     public void setRazorpayPaymentId(String razorpayPaymentId) {
         this.razorpayPaymentId = razorpayPaymentId;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String getCouponCodeApplied() {
+        return couponCodeApplied;
+    }
+
+    public void setCouponCodeApplied(String couponCodeApplied) {
+        this.couponCodeApplied = couponCodeApplied;
+    }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public BigDecimal getDiscountedTotal() {
+        return discountedTotal;
+    }
+
+    public void setDiscountedTotal(BigDecimal discountedTotal) {
+        this.discountedTotal = discountedTotal;
     }
 }

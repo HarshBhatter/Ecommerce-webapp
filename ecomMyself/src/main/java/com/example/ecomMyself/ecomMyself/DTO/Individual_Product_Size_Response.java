@@ -1,4 +1,4 @@
-package com.example.ecomMyself.ecomMyself.model.DTO;
+package com.example.ecomMyself.ecomMyself.DTO;
 
 public record Individual_Product_Size_Response(
         int id,

@@ -1,14 +1,17 @@
 package com.example.ecomMyself.ecomMyself.controller;
 
-import com.example.ecomMyself.ecomMyself.model.DTO.RazorPayDetail;
+import com.example.ecomMyself.ecomMyself.Notification.Enum.NotificationCategory;
+import com.example.ecomMyself.ecomMyself.Notification.Service.NotificationService;
+import com.example.ecomMyself.ecomMyself.DTO.RazorPayDetail;
 import com.example.ecomMyself.ecomMyself.model.Users;
 import com.example.ecomMyself.ecomMyself.repository.User_Repo;
+import com.example.ecomMyself.ecomMyself.service.OrderSummaryService;
 import com.example.ecomMyself.ecomMyself.service.Order_service;
 import com.example.ecomMyself.ecomMyself.service.PaymentService;
 import com.example.ecomMyself.ecomMyself.service.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -23,6 +26,11 @@ public class PaymentController {
     private PaymentService paymentService;
     @Autowired
     private Order_service order_service;
+
+    @Autowired
+    private OrderSummaryService orderSummaryService;
+    @Autowired
+    private NotificationService notificationService;
     @PostMapping("razorpay/payment")
     public RazorPayDetail placeOrder(@AuthenticationPrincipal UserPrincipal principal)
     {
@@ -33,6 +41,7 @@ public class PaymentController {
             throw new RuntimeException(e);
         }
     }
+    @Transactional
     @PostMapping("razorpay/confirm")
     public String confirmOrder(@RequestBody Map<String, String> body, @AuthenticationPrincipal UserPrincipal principal)
     {
@@ -47,10 +56,12 @@ public class PaymentController {
             return "FAILED TO PLACE ORDER";
 
         Users user=principal.getUser();
+        orderSummaryService.orderPlaced(user);
         user.setCartValue(BigDecimal.ZERO);
         user_repo.save(user);
-
         order_service.placeOrder(principal,razorpayPaymentId);
+        notificationService.notify(NotificationCategory.ORDER_PLACED,principal.getUser());
+
         return "ORDER PLACED!";
     }
 }

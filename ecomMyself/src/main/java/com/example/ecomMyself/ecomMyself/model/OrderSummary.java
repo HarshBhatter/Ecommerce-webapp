@@ -1,6 +1,7 @@
 package com.example.ecomMyself.ecomMyself.model;
 
 import com.example.ecomMyself.ecomMyself.Coupons.Model.Coupon;
+import com.example.ecomMyself.ecomMyself.Embedable.Address;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -17,10 +18,14 @@ public class OrderSummary {
     @ManyToOne
     @JoinColumn(name="Couponid")
     private Coupon coupon;
-    private String street;
-    private String city;
-    private String state;
-    private int pincode;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "street")),
+            @AttributeOverride(name = "city", column = @Column(name = "city")),
+            @AttributeOverride(name = "state", column = @Column(name = "state")),
+            @AttributeOverride(name = "pincode", column = @Column(name = "pincode"))
+    })
+    private Address address;
     private String emailId;
     private BigDecimal total;
     private BigDecimal discount;
@@ -29,14 +34,11 @@ public class OrderSummary {
     public OrderSummary() {
     }
 
-    public OrderSummary(long id, Users user, Coupon coupon, String street, String city, String state, int pincode, String emailId,BigDecimal total, BigDecimal discount, BigDecimal discountedTotal) {
+    public OrderSummary(long id, Users user, Coupon coupon, Address address, String emailId,BigDecimal total, BigDecimal discount, BigDecimal discountedTotal) {
         this.id = id;
         this.user = user;
         this.coupon = coupon;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.pincode = pincode;
+        this.address=address;
         this.emailId = emailId;
         this.total=total;
         this.discount=discount;
@@ -65,38 +67,6 @@ public class OrderSummary {
 
     public void setCoupon(Coupon coupon) {
         this.coupon = coupon;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public int getPincode() {
-        return pincode;
-    }
-
-    public void setPincode(int pincode) {
-        this.pincode = pincode;
     }
 
     public String getEmailId() {
@@ -129,5 +99,13 @@ public class OrderSummary {
 
     public void setDiscountedTotal(BigDecimal discountedTotal) {
         this.discountedTotal = discountedTotal;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

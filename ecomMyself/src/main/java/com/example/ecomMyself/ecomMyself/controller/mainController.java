@@ -1,18 +1,14 @@
 package com.example.ecomMyself.ecomMyself.controller;
 
-import com.example.ecomMyself.ecomMyself.model.DTO.AddProduct_request;
-import com.example.ecomMyself.ecomMyself.model.DTO.Auth_response;
-import com.example.ecomMyself.ecomMyself.model.DTO.Individual_Product_Response;
-import com.example.ecomMyself.ecomMyself.model.DTO.Product_Response;
+import com.example.ecomMyself.ecomMyself.DTO.AddProduct_request;
+import com.example.ecomMyself.ecomMyself.DTO.Auth_response;
+import com.example.ecomMyself.ecomMyself.DTO.Individual_Product_Response;
+import com.example.ecomMyself.ecomMyself.DTO.Product_Response;
 import com.example.ecomMyself.ecomMyself.model.Product;
 import com.example.ecomMyself.ecomMyself.repository.User_Repo;
 import com.example.ecomMyself.ecomMyself.service.*;
 import com.example.ecomMyself.ecomMyself.model.Users;
-import jakarta.persistence.Lob;
-import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @CrossOrigin()

@@ -2,7 +2,7 @@ package com.example.ecomMyself.ecomMyself.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Builder;
+//import lombok.Builder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.engine.internal.Cascade;
 

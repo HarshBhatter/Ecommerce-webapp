@@ -1,7 +1,6 @@
 package com.example.ecomMyself.ecomMyself.service;
 
-import com.example.ecomMyself.ecomMyself.model.Cart;
-import com.example.ecomMyself.ecomMyself.model.DTO.RazorPayDetail;
+import com.example.ecomMyself.ecomMyself.DTO.RazorPayDetail;
 import com.example.ecomMyself.ecomMyself.repository.Cart_repo;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class PaymentService {

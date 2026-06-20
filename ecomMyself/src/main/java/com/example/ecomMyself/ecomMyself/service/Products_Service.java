@@ -1,23 +1,17 @@
 package com.example.ecomMyself.ecomMyself.service;
 
-import com.example.ecomMyself.ecomMyself.model.DTO.*;
+import com.example.ecomMyself.ecomMyself.DTO.*;
+import com.example.ecomMyself.ecomMyself.DTO.*;
 import com.example.ecomMyself.ecomMyself.model.Product;
 import com.example.ecomMyself.ecomMyself.model.Product_colors;
 import com.example.ecomMyself.ecomMyself.model.Product_size;
 import com.example.ecomMyself.ecomMyself.repository.Product_Repo;
-import com.example.ecomMyself.ecomMyself.repository.Product_colors_repo;
-import com.example.ecomMyself.ecomMyself.repository.Product_size_repo;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import com.example.ecomMyself.ecomMyself.model.DTO.Individual_Product_Response;
-import com.example.ecomMyself.ecomMyself.model.DTO.Individual_Product_Colors_Response;
-import com.example.ecomMyself.ecomMyself.model.DTO.Individual_Product_Size_Response;
 
 import java.io.IOException;
 import java.math.BigDecimal;

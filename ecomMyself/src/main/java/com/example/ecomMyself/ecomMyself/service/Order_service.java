@@ -1,19 +1,13 @@
 package com.example.ecomMyself.ecomMyself.service;
 
-import com.example.ecomMyself.ecomMyself.Coupons.Factory.CategoryFactory;
-import com.example.ecomMyself.ecomMyself.Coupons.Factory.StrategyFactory;
-import com.example.ecomMyself.ecomMyself.Coupons.Model.Coupon;
 import com.example.ecomMyself.ecomMyself.Coupons.Service.CouponService;
-import com.example.ecomMyself.ecomMyself.Coupons.Strategy.CouponStrategy;
+import com.example.ecomMyself.ecomMyself.DTO.*;
 import com.example.ecomMyself.ecomMyself.model.*;
-import com.example.ecomMyself.ecomMyself.model.DTO.*;
+import com.example.ecomMyself.ecomMyself.DTO.*;
 import com.example.ecomMyself.ecomMyself.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -109,11 +103,17 @@ public class Order_service {
         }
         o.setTotal(total);
         o.setOrderItems(oi);
+
+        OrderSummary orderSummary=orderSummaryService.getOrderSummary(principal.getUser());
+        o.setAddress(orderSummary.getAddress());
+        o.setDiscount(orderSummary.getDiscount());
+        o.setDiscountedTotal(orderSummary.getDiscountedTotal());
+        if(orderSummary.getCoupon()!=null)
+            o.setCouponCodeApplied(orderSummary.getCoupon().getCode());
+
         ordersRepo.save(o);
         cartRepo.deleteAllByUserId(principal.getUser().getId());
-
         orderSummaryService.delete(principal.getUser());
-
     }
 
 
@@ -129,7 +129,7 @@ public class Order_service {
             String orderid=o.getOrderId();
             String status=o.getStatus();
             LocalDate orderDate=o.getOrderDate();
-            BigDecimal total=o.getTotal();
+            BigDecimal total=o.getDiscountedTotal();
             List<Order_item_response> orderItemResponseList=new ArrayList<>();
             for(Order_items o2:o.getOrderItems())
             {
@@ -151,7 +151,7 @@ public class Order_service {
         String orderId=o.getOrderId();
         String status=o.getStatus();
         LocalDate date=o.getOrderDate();
-        BigDecimal total=o.getTotal();
+        BigDecimal total=o.getDiscountedTotal();
         List<Order_item_response> orderItemResponseList=new ArrayList<>();
         for(Order_items o2:o.getOrderItems())
         {
@@ -213,5 +213,9 @@ public class Order_service {
             cartRepo.save(c);
         }
         orderSummaryService.refresh(principal.getUser());
+    }
+    public String getLatestOrderId(Users user) {
+        List<Orders> orders=ordersRepo.findAllByUserId(user.getId());
+        return orders.get(orders.size()-1).getOrderId();
     }
 }
