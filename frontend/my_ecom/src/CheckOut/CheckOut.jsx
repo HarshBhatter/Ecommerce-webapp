@@ -6,6 +6,8 @@ import { CartBody } from "../Cart/CartBody";
 import { CartData } from '../Cart/CartData';
 import { CheckOutData } from './CheckOutData';
 import { Coupons } from '../Coupon/Coupons';
+import { FaRupeeSign } from "react-icons/fa";
+
 
 export const CheckOut = () => {
     const ordersummary = CheckOutData();
@@ -85,7 +87,7 @@ export const CheckOut = () => {
     console.log(ordersummary);
 
     return (
-        <div className="CheckOut">
+        <div className="checkOut">
 
             <div className="header">~Summary~</div>
             <div className="shippingDetails">
@@ -154,11 +156,11 @@ export const CheckOut = () => {
             </div>
             
             <hr />
-
-            <div>
-                {ordersummary?.discountedTotal || total || "Loading..."}
+            <hr />
+            <div className='finalamount'>
+                <div><FaRupeeSign/> {ordersummary?.discountedTotal || total || "Loading..."}</div>
             </div>
-
+            <hr />
             <hr />
 
             <div className="pay">

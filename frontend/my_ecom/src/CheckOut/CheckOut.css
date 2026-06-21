@@ -1,3 +1,8 @@
+.checkOut{
+    width:100%;
+    margin-left: auto;
+    margin-right: auto;
+}
 .pay{
     display:flex ;
     align-items: center;
@@ -8,6 +13,7 @@
     padding: 1%;
 }
 .CouponSection{
+    width:100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,5 +26,19 @@
     display: flex;
 }
 .coupon-input-container{
+    display: flex;
+    width:100%;
+}
+.finalamount{
+    font-size: 100%;
+    padding :0.5%;
+    display: flex;
+    justify-content: flex-end;
+    /* background-color: aqua; */
+    font-weight: bolder;
+    /* padding-left:92%; */
+    margin:.2%;
+}
+.finalamount div{
     display: flex;
 }
