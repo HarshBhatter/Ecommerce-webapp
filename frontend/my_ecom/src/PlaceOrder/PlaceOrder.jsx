@@ -8,16 +8,15 @@ import { useEffect } from 'react';
 
 export const PlaceOrder = () => {
     const navigate = useNavigate();
-     useEffect(() => {
-            if (localStorage.getItem('token') === null) {
-                navigate('/login',
-                    {
-                        state: { from: '/Cart' },
-                        replace: true
-                    }
-                );
-            }
-        },);
+    useEffect(() => {
+        if (localStorage.getItem('token') === null) {
+            navigate('/login',
+                {
+                    state: { from: '/Cart' },
+                }
+            );
+        }
+    }, []);
 
     return (
         <div className='overlay'>
@@ -25,29 +24,35 @@ export const PlaceOrder = () => {
                 <div className='header'>Shipping and checkout details<hr></hr></div>
                 <NavLink to={'/cart'} className='cross'><RxCross2 /></NavLink>
                 <div className='userinfo'>
-                    <form onSubmit={(e) => {
+                    <form onSubmit={async (e) => {
                         e.preventDefault();
-                        const shipping = {
-                            email: e.target.Email.value,
-                            address: e.target.Address.value,
-                            city: e.target.City.value,
-                            state: e.target.State.value,
-                            pincode: e.target.Pincode.value
-                        };
+                        try {
+                            const response = await fetch(`${import.meta.env.VITE_API_URL}/saveAddress`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization':`Bearer ${localStorage.getItem('token')}`
+                                },
+                                body: JSON.stringify({
+                                    street: e.target.street.value,
+                                    city: e.target.City.value,
+                                    state: e.target.State.value,
+                                    pincode: e.target.Pincode.value
+                                })
+                            });
 
-                        localStorage.setItem(
-                            "shippingDetails",
-                            JSON.stringify(shipping)
-                        );
+                            if (!response.ok) {
+                                const msg = await response.text();
+                                throw new Error(msg || 'Failed to save address');
+                            }
 
-                        navigate("/CheckOut", {
-                            state: shipping
-                        });
+                            navigate('/checkout', { state: { saved: true } });
+                        } catch (error) {
+                            alert("An Error occured.please try again" + error);
+                        }
                     }}>
-                        <label htmlFor="Email">Email Id</label>
-                        <input type="email" id="Email" name="Email" required />
-                        <label htmlFor="Address">Address</label>
-                        <input type="text" id="Address" name="Address" required />
+                        <label htmlFor="street">Street</label>
+                        <input type="text" id="street" name="street" required />
                         <label htmlFor="City">City</label>
                         <input type="text" id="City" name="City" required />
                         <label htmlFor="State">State</label>

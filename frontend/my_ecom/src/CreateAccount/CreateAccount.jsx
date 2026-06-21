@@ -25,7 +25,8 @@ export const CreateAccount = () => {
                             },
                             body: JSON.stringify({
                                 username: e.target.username.value,
-                                password: e.target.password.value
+                                password: e.target.password.value,
+                                email:e.target.password.email
                             })
                         });
 
@@ -53,6 +54,10 @@ export const CreateAccount = () => {
                     <div>
                         <label htmlFor="password">Password</label>
                         <input type="password" id="password" name="password" required />
+                    </div>
+                    <div>
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" name="email" required />
                     </div>
                     <button type="submit">Create</button>
 

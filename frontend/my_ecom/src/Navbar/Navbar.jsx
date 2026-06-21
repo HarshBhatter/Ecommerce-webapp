@@ -42,7 +42,7 @@ export const Navbar = () => {
         alert("Session Expired");
         window.location.reload();
       }
-    }, 60000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 

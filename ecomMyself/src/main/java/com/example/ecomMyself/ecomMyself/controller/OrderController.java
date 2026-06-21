@@ -71,10 +71,20 @@ public class OrderController {
         return ResponseEntity.ok(list);
     }
     @PostMapping("ApplyCoupon")
-    public ResponseEntity<?> applyCoupon(@AuthenticationPrincipal UserPrincipal principal,@RequestBody long couponId)
+    public ResponseEntity<?> applyCoupon(@AuthenticationPrincipal UserPrincipal principal,@RequestBody String couponCode)
     {
         try {
-            return ResponseEntity.ok(couponService.apply(principal.getUser(),couponId));
+            return ResponseEntity.ok(couponService.apply(principal.getUser(),couponCode));
+        }catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PostMapping("RemoveCoupon")
+    public ResponseEntity<?> removeCoupon(@AuthenticationPrincipal UserPrincipal principal)
+    {
+        try {
+            return ResponseEntity.ok(couponService.remove(principal.getUser()));
         }catch (Exception e)
         {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -93,6 +103,7 @@ public class OrderController {
     @GetMapping("OrderSummary")
     public ResponseEntity<?> OrderSummary(@AuthenticationPrincipal UserPrincipal principal)
     {
+        System.out.println("getting Order Summary..");
         try {
             return ResponseEntity.ok(orderSummaryService.getOrderSummary(principal.getUser()));
         }catch (Exception e)
@@ -101,11 +112,11 @@ public class OrderController {
         }
     }
 
-    @PostMapping("setAddressEmail")
-    public ResponseEntity<?> setAddressEmail(@AuthenticationPrincipal UserPrincipal principal,@RequestBody Address address)
+    @PostMapping("saveAddress")
+    public ResponseEntity<?> saveAddress(@AuthenticationPrincipal UserPrincipal principal,@RequestBody Address address)
     {
         try {
-            orderSummaryService.setAddressEmail(principal.getUser(), address);
+            orderSummaryService.saveAddress(principal.getUser(), address);
             return ResponseEntity.ok("saved Address and Email");
         }
         catch (Exception e)

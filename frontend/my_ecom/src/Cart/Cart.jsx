@@ -18,7 +18,6 @@ export const Cart = () => {
             navigate('/login',
                 {
                     state: { from: location },
-                    replace: true
                 }
             );
         }
@@ -37,7 +36,7 @@ export const Cart = () => {
             <div className='header'>Your Cart</div>
             <div><CartBody data={data}/></div>
             <div className="PlaceOrder">
-                <button onClick={() => navigate('/PlaceOrder')}>place order</button>
+                <button onClick={() => navigate('/CheckOut')}>place order</button>
                 {/* <button
                     onClick={async () => {
 

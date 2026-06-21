@@ -1,0 +1,11 @@
+.CouponCode{
+    font-weight: bolder;
+}
+.CouponInfo{
+    font-weight: bold;
+    padding-left: 1%;
+}
+.CouponBox{
+    padding: 1%;
+    background-color: rgb(109, 131, 131);
+}

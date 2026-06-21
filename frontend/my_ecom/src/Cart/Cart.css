@@ -37,6 +37,14 @@ table{
     justify-content: center;
     align-items: center;
 }
+td .nav-link{
+    color: black;
+    text-decoration: none;
+}
+.nav-link:hover{
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
     .header {
         font-size: 120%;
@@ -55,10 +63,7 @@ table{
         align-items: center;
     }
 }
-td .nav-link{
-    color: black;
-    text-decoration: none;
-}
-.nav-link:hover{
-    text-decoration: underline;
+@media(max-width:380px)
+{
+    
 }

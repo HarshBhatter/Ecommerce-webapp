@@ -81,6 +81,14 @@ a:focus {
   .right-navbar div {
     font-size: 16px;
   }
+  /* .right-navbar div{
+    padding-top: 2%;
+  } */
+  .right-navbar svg , .right-navbar svg:hover {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+}
 }
 @media (max-width: 480px) {
   .navbar {
@@ -89,10 +97,10 @@ a:focus {
   }
   .left-navbar,
   .right-navbar{
-    gap: 15px;
+    gap: 12px;
   }
   .left-navbar div,.right-navbar div{
-    font-size: 14px;
+    font-size: 12px;
   }
   .right-navbar svg{
     font-size: 16px;

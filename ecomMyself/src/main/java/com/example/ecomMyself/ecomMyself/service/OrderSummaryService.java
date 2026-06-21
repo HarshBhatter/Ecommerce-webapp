@@ -30,7 +30,7 @@ public class OrderSummaryService {
 
         if(orderSummary.isPresent()) {
             if(orderSummary.get().getCoupon()!=null)
-                couponService.apply(user, orderSummary.get().getCoupon().getId());
+                couponService.apply(user, orderSummary.get().getCoupon().getCode());
         }
     }
 
@@ -52,7 +52,7 @@ public class OrderSummaryService {
         orderSummary_repo.save(orderSummary2);
         return orderSummary2;
     }
-    public void setAddressEmail(Users user, Address address)
+    public void saveAddress(Users user, Address address)
     {
         OrderSummary orderSummary=orderSummary_repo.findByUser(user).get();
         orderSummary.setAddress(address);

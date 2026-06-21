@@ -17,6 +17,7 @@ import { AddProduct } from './AddProduct/AddProduct.jsx'
 import { CreateAccount } from './CreateAccount/CreateAccount.jsx'
 import { PlaceOrder} from './PlaceOrder/PlaceOrder.jsx'
 import {CheckOut} from './CheckOut/CheckOut.jsx'
+import { Coupons } from './Coupon/Coupons.jsx'
 
 const AdminRoute = ({ children }) => {
   const role = localStorage.getItem("role");
@@ -48,7 +49,8 @@ const router = createBrowserRouter([
       { path: "/order/:id", element: <IndividualOrder /> },
       { path: "/login/Oauth", element: <LoginOauth /> },
       { path: "/AddProduct", element: <AdminRoute><AddProduct /></AdminRoute> },
-      { path: "/CreateAccount", element: <CreateAccount /> }
+      { path: "/CreateAccount", element: <CreateAccount /> },
+      { path: "/Coupons",element:<Coupons/>}
     ],
   },
 ]);

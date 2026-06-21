@@ -7,3 +7,18 @@
 .shippingDetails{
     padding: 1%;
 }
+.CouponSection{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding : 2%;
+}
+.applied-coupon{
+    background-color: rgb(152, 152, 211);
+}
+.input-wrapper{
+    display: flex;
+}
+.coupon-input-container{
+    display: flex;
+}

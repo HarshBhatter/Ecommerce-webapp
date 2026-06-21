@@ -15,6 +15,7 @@ public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String code;
     @Enumerated(EnumType.STRING)
     private DiscountType discountType;
@@ -32,7 +33,9 @@ public class Coupon {
     @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL)
     private List<OrderSummary> orderSummaryList;
 
-    public Coupon(Long id, String code, DiscountType discountType, CouponCategory couponCategory, double discountValue, Double maxDiscount, BigDecimal  minimumCartValue, LocalDate startDate, LocalDate expiryDate, String gender,int limitPerUser) {
+    private String description;
+
+    public Coupon(Long id, String code, DiscountType discountType, CouponCategory couponCategory, double discountValue, Double maxDiscount, BigDecimal  minimumCartValue, LocalDate startDate, LocalDate expiryDate, String gender,int limitPerUser,String description) {
         this.id = id;
         this.code = code;
         this.discountType = discountType;
@@ -46,6 +49,7 @@ public class Coupon {
         this.limitPerUser=limitPerUser;
         usageMap=new HashMap<>();
         isActive=true;
+        this.description=description;
     }
 
     public Coupon() {
@@ -163,5 +167,13 @@ public class Coupon {
 
     public void setLimitPerUser(int limitPerUser) {
         this.limitPerUser = limitPerUser;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
