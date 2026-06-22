@@ -42,6 +42,7 @@ public class mainController {
     }
     @PostMapping("create_account")
     public ResponseEntity<?> creating_account(@RequestBody Users user) {
+        System.out.println(user.toString());
         try {
             Users savedUser = user_service.save(user);
             String token=jwtService.generateToken(user.getUsername(), user.getVersion());

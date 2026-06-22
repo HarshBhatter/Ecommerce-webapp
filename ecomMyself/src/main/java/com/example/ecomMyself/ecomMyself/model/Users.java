@@ -23,11 +23,20 @@ public class Users {
         version=1;
         cartValue=BigDecimal.valueOf(0);
     }
+    public Users(String username)
+    {
+        this.username=username;
+        this.email=username;
+        version=1;
+        cartValue=BigDecimal.valueOf(0);
+    }
 
     public Users(String username, String password,String email) {
         this.username = username;
         this.password = password;
         this.email=email;
+        version=1;
+        cartValue=BigDecimal.valueOf(0);
     }
 
     public int getVersion() {

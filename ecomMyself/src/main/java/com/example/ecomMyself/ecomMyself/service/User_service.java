@@ -32,6 +32,7 @@ public class User_service {
         }
         if(user_repo.existsByEmail(user.getEmail()))
             throw new RuntimeException("An account with this Email exists!");
+        System.out.println("saving user");
 
         user.setRoles(roles_repo.findById(1).orElseThrow());
         user.setPassword(encoder.encode(user.getPassword()));
@@ -55,4 +56,11 @@ public class User_service {
         return user_repo.findByUsername(username);
     }
 
+    public Users saveOAuthUser(Users user) {
+        System.out.println(user.toString());
+        user.setRoles(roles_repo.findById(1).orElseThrow());
+        Users saveduser=(Users)user_repo.save(user);
+        notificationService.notify(NotificationCategory.NEW_USER,saveduser);
+        return saveduser;
+    }
 }

@@ -38,7 +38,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         }
         Users user;
         if (!user_repo.existsByUsername(email)) {
-            user=user_service.save(new Users(email,null,email));
+            user=user_service.saveOAuthUser(new Users(email));
         } else {
             user = user_repo.findByUsername(email);
         }

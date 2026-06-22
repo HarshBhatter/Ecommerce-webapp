@@ -26,7 +26,7 @@ export const CreateAccount = () => {
                             body: JSON.stringify({
                                 username: e.target.username.value,
                                 password: e.target.password.value,
-                                email:e.target.password.email
+                                email:e.target.email.value
                             })
                         });
 
