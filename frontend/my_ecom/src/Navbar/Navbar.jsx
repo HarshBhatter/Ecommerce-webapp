@@ -50,7 +50,7 @@ export const Navbar = () => {
     <>
       <div className="navbar">
         <div className="left-navbar">
-          <div><NavLink to="/"><RiShoppingBag4Fill /></NavLink></div>
+          <div><NavLink to="/"  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}><RiShoppingBag4Fill /></NavLink></div>
           <div><NavLink to="/#about-us" >About Us</NavLink><hr></hr></div>
           <div><NavLink to="/#contact-us">Contact Us</NavLink><hr /></div>
         </div>
@@ -62,24 +62,57 @@ export const Navbar = () => {
             <FaCircleUser style={{ cursor: 'pointer' }} onClick={() => setShowLogout(!showLogout)} />
             <hr />
             {showLogout && (
-              <div style={{
-                position: 'absolute', top: '100%', right: 0, backgroundColor: 'white', color: 'black', border: '1px solid #ccc', padding: '5px 10px', cursor: 'pointer', zIndex: 1000
-              }} onClick={async () => {
-                await fetch(`${import.meta.env.VITE_API_URL}/Logout`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                  }
-                })
-                  .catch(error => {
-                    console.log(error);
-                  });
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("logintime");
-                  window.location.reload();
-              }}>
-                Logout
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  right: 0,
+                  backgroundColor: "white",
+                  color: "black",
+                  border: "1px solid #ccc",
+                  zIndex: 1000,
+                  minWidth: "130px"
+                }}
+              >
+                <div
+                  style={{
+                    padding: "8px 12px",
+                    cursor: "pointer",
+                    borderBottom: "1px solid #ddd"
+                  }}
+                  onClick={() => {
+                    setShowLogout(false);
+                    window.location.href='/Coupons';
+                  }}
+                >
+                  My Coupons
+                </div>
+
+                <div
+                  style={{
+                    padding: "8px 12px",
+                    cursor: "pointer"
+                  }}
+                  onClick={async () => {
+                    try {
+                      await fetch(`${import.meta.env.VITE_API_URL}/Logout`, {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                          Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                      });
+                    } catch (error) {
+                      console.log(error);
+                    }
+
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("logintime");
+                    window.location.reload();
+                  }}
+                >
+                  Logout
+                </div>
               </div>
             )}
           </div>

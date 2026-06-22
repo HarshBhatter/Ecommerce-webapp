@@ -32,10 +32,10 @@ public class PaymentController {
     @Autowired
     private NotificationService notificationService;
     @PostMapping("razorpay/payment")
-    public RazorPayDetail placeOrder(@AuthenticationPrincipal UserPrincipal principal)
+    public RazorPayDetail placeOrder(@AuthenticationPrincipal UserPrincipal principal,@RequestBody BigDecimal amtToPay)
     {
         try{
-            return paymentService.placeOrder(principal);
+            return paymentService.placeOrder(principal,amtToPay);
         }catch (Exception e)
         {
             throw new RuntimeException(e);
@@ -57,10 +57,15 @@ public class PaymentController {
 
         Users user=principal.getUser();
         orderSummaryService.orderPlaced(user);
+        System.out.println("pass1");
         user.setCartValue(BigDecimal.ZERO);
         user_repo.save(user);
+        System.out.println("pass2");
         order_service.placeOrder(principal,razorpayPaymentId);
+        System.out.println("pass3");
         notificationService.notify(NotificationCategory.ORDER_PLACED,principal.getUser());
+        System.out.println("pass4");
+
 
         return "ORDER PLACED!";
     }

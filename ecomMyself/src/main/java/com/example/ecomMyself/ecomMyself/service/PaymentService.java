@@ -21,10 +21,10 @@ public class PaymentService {
     private String apikey;
     @Value("${razorpay.key.secret}")
     private String apiSecret;
-    public RazorPayDetail placeOrder(UserPrincipal principal) throws RazorpayException {
+    public RazorPayDetail placeOrder(UserPrincipal principal,BigDecimal amtToPay) throws RazorpayException {
         RazorpayClient razorpay = new RazorpayClient(apikey, apiSecret);
         JSONObject orderRequest = new JSONObject();
-        BigDecimal amount=principal.getCartValue().multiply(BigDecimal.valueOf(100));
+        BigDecimal amount=amtToPay.multiply(BigDecimal.valueOf(100));
 
         orderRequest.put("amount",amount);
         orderRequest.put("currency","INR");

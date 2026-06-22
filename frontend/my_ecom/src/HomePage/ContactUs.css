@@ -11,7 +11,7 @@
     margin-top: 0.4%;
     display: flex;
     flex-direction: column;
-    gap: 12px; 
+    gap: 10px; 
     font-size: 120%;
 }
 
@@ -24,7 +24,7 @@
 }
 .ContactUs .links{
     display: flex;
-    gap: 2%;
+    gap: 1%;
 }
 
 @media (max-width: 768px) {

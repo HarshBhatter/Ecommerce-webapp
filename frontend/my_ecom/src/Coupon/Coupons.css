@@ -1,11 +1,24 @@
 .CouponCode{
     font-weight: bolder;
+
 }
 .CouponInfo{
-    font-weight: bold;
-    padding-left: 1%;
+    /* font-weight: bold; */
+    padding: 0.3%;
+    padding-left: 0;
+    font-style:oblique;
+    /* padding-left: 2%; */
+}
+.ExpiryDate{
+    font-size: 50%;
+    color:black
 }
 .CouponBox{
-    padding: 1%;
+    color:rgb(255, 255, 255);
     background-color: rgb(109, 131, 131);
+    padding: .5%;
+    border: black solid;
+}
+.Coupon-outer-box{
+    height: auto;
 }

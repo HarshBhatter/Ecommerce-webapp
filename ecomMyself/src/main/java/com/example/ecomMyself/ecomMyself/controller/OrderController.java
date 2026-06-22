@@ -7,6 +7,7 @@ import com.example.ecomMyself.ecomMyself.DTO.Order_item_request;
 import com.example.ecomMyself.ecomMyself.DTO.Order_response;
 import com.example.ecomMyself.ecomMyself.Embedable.Address;
 import com.example.ecomMyself.ecomMyself.DTO.*;
+import com.example.ecomMyself.ecomMyself.model.OrderSummary;
 import com.example.ecomMyself.ecomMyself.service.OrderSummaryService;
 import com.example.ecomMyself.ecomMyself.service.Order_service;
 import com.example.ecomMyself.ecomMyself.service.UserPrincipal;
@@ -105,7 +106,10 @@ public class OrderController {
     {
         System.out.println("getting Order Summary..");
         try {
-            return ResponseEntity.ok(orderSummaryService.getOrderSummary(principal.getUser()));
+            OrderSummary orderSummary=orderSummaryService.getOrderSummary(principal.getUser());
+            String couponCode=orderSummary.getCoupon()==null?"":orderSummary.getCoupon().getCode();
+            OrderSummary_response orderSummaryResponse=new OrderSummary_response(orderSummary.getId(),couponCode,orderSummary.getAddress(),orderSummary.getTotal(),orderSummary.getDiscount(),orderSummary.getDiscountedTotal());
+            return ResponseEntity.ok(orderSummaryResponse);
         }catch (Exception e)
         {
             return ResponseEntity.badRequest().body(e.getMessage());

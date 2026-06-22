@@ -32,7 +32,7 @@ export const CheckOut = () => {
     if (ordersummary?.address === null) {
         navigate('/PlaceOrder');
     }
-}, [ordersummary, navigate]);
+    }, [ordersummary, navigate]);
 
     const handleRemoveCoupon = async () => {
         try {
@@ -89,7 +89,7 @@ export const CheckOut = () => {
     return (
         <div className="checkOut">
 
-            <div className="header">~Summary~</div>
+            <div className="header">~Order Summary~</div>
             <div className="shippingDetails">
                 <h3>Deliver To :-</h3>
                 <br />
@@ -103,15 +103,18 @@ export const CheckOut = () => {
             <CartBody data={data} />
             <div className='CouponSection'>
                 {
-                ordersummary?.coupon ? (
-                    <div className="applied-coupon">
-                        <span>
-                            Coupon Applied : {ordersummary.coupon.code}
-                        </span>
+                (ordersummary?.couponCode?.length)>0 ? (
+                    <div>
+                        <div className="applied-coupon">
+                            <span>
+                                Coupon Applied : {ordersummary.couponCode}
+                            </span>
 
-                        <button onClick={handleRemoveCoupon}>
-                            Remove
-                        </button>
+                            <button onClick={handleRemoveCoupon}>
+                                Remove
+                            </button>
+                        </div>
+                        <div className='discount'>You Saved <FaRupeeSign/> {ordersummary.discount} on this Order!</div>
                     </div>
                 ) : (
                     <div>
@@ -145,7 +148,7 @@ export const CheckOut = () => {
                         <Coupons
                             selectable={true}
                             onSelect={(coupon) => {
-                                setInputCode(coupon.code);
+                                setInputCode(coupon);
                                 setShowCoupons(false);
                         }}/>
                     }
@@ -158,7 +161,8 @@ export const CheckOut = () => {
             <hr />
             <hr />
             <div className='finalamount'>
-                <div><FaRupeeSign/> {ordersummary?.discountedTotal || total || "Loading..."}</div>
+                <div className='left'>Total:</div>
+                <div className='right'><FaRupeeSign/> {ordersummary?.discountedTotal || total || "Loading..."}</div>
             </div>
             <hr />
             <hr />
@@ -176,7 +180,8 @@ export const CheckOut = () => {
                                     headers: {
                                         "Content-Type": "application/json",
                                         Authorization: `Bearer ${localStorage.getItem("token")}`
-                                    }
+                                    },
+                                    body:ordersummary?.discountedTotal
                                 }
                             );
 

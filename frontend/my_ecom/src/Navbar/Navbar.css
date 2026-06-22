@@ -74,6 +74,9 @@ a:focus {
   font-size: 25px;
 }
 @media (max-width: 768px) {
+  body{
+    padding-top: 4%;      /* prevent content from being hidden under navbar */
+  }
   .navbar {
     padding: 2%;
   }
@@ -91,6 +94,9 @@ a:focus {
 }
 }
 @media (max-width: 480px) {
+    body{
+    padding-top: 7%;      /* prevent content from being hidden under navbar */
+  }
   .navbar {
     padding: 1%;
     padding-top: 3%;
@@ -104,5 +110,10 @@ a:focus {
   }
   .right-navbar svg{
     font-size: 16px;
+  }
+}
+@media (max-width: 376px) {
+    body{
+    padding-top: 8.6%;      /* prevent content from being hidden under navbar */
   }
 }

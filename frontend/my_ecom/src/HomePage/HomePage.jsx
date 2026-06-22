@@ -37,7 +37,6 @@ export function Homepage() {
                     <div className='links'>Find us on : 
                         <a href="https://www.linkedin.com/in/harshbhatter03/"><FaLinkedin /></a>
                         <a href="https://github.com/HarshBhatter"><ImGithub /></a>
-                        <a href="https://www.instagram.com/harsh_bhatter03/"><FaInstagram /></a>
                     </div>
                 </div>
             </div>

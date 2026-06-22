@@ -33,12 +33,28 @@
     font-size: 100%;
     padding :0.5%;
     display: flex;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     /* background-color: aqua; */
     font-weight: bolder;
     /* padding-left:92%; */
     margin:.2%;
 }
 .finalamount div{
+    display: flex;
+}
+.finalamount .left{
+    padding-left:2%;
+    width:80%
+}
+.finalamount .right{
+    width:20%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right:2%;
+}
+.discount{
+    padding: 1%;
+    color:green;
+    justify-content: center;
     display: flex;
 }
