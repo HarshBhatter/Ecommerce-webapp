@@ -1,10 +1,9 @@
 import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import { data } from 'react-router-dom'
 
 export const CheckOutData = () => {
-  const [OrderSummary,setOrderSummary]=useState({})
+  const [OrderSummary,setOrderSummary]=useState(null)
   
       useEffect(() => {
           fetch(`${import.meta.env.VITE_API_URL}/OrderSummary`,{
@@ -19,7 +18,7 @@ export const CheckOutData = () => {
                     console.log(data),
                     setOrderSummary(data)})
               .catch(err => 
-                alert(err)
+                alert(err.message)
               )
       }, [])
       

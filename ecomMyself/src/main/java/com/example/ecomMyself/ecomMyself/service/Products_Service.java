@@ -166,7 +166,7 @@ public class Products_Service {
             List<Individual_Product_Size_Response> productSizeResponses=new ArrayList<>();
             List<Product_size> ps=pci.getSize();
             for(Product_size psi:ps)
-                productSizeResponses.add(new Individual_Product_Size_Response(psi.getId(),psi.getQuantity(),psi.getSize()));
+                productSizeResponses.add(new Individual_Product_Size_Response(psi.getId(),psi.getQuantity(),psi.getReserved(),psi.getSize()));
 
             Individual_Product_Colors_Response pcr2=new Individual_Product_Colors_Response(pci.getId(), pci.getColor(),productSizeResponses,"/Product/image/"+p2.getId()+"?colorId="+i);
             pcr.add(pcr2);

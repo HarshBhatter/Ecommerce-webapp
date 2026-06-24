@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public class OrderSummaryService {
     {
         Optional<OrderSummary> orderSummary =
                 orderSummary_repo.findByUser(user);
-        if(orderSummary.isPresent() && orderSummary.get().getExpiry().isAfter(LocalDateTime.now()))
+        if(orderSummary.isPresent() && orderSummary.get().getExpiry().isAfter(LocalDateTime.now(ZoneOffset.UTC)))
             return orderSummary.get();
 
         for(int i=0;i<5;i++)

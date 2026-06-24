@@ -31,14 +31,17 @@ public class OrderController {
     @GetMapping("MyOrders")
     public ResponseEntity<?> getOrder(@AuthenticationPrincipal UserPrincipal principal)
     {
+        System.out.println(principal.getUser().getUsername()+" is getting his/her orders..");
         try {
             List<Order_response> orders = order_service.MyOrders(principal.getUser());
             if (orders.isEmpty()) {
+                System.out.println(principal.getUser().getUsername()+" has no orders.");
                 return ResponseEntity.status(404).body("No Orders placed");
             }
             return ResponseEntity.ok(orders);
         }catch(Exception e)
         {
+            System.out.println("Problem in geeting "+principal.getUser().getUsername()+"orders :"+e.getMessage());
             return ResponseEntity.badRequest().body(e);
         }
     }
@@ -56,59 +59,77 @@ public class OrderController {
     @PostMapping("AddToCart")
     public String AddToCart(@AuthenticationPrincipal UserPrincipal principal, @RequestBody Order_item_request orderItemRequest)
     {
-        order_service.AddToCart(principal.getUser(),orderItemRequest);
-        return "Added to cart";
+        System.out.println("Adding to cart..");
+        try {
+            order_service.AddToCart(principal.getUser(), orderItemRequest);
+            return "ADDED TO CART";
+        }catch (Exception e)
+        {
+            System.out.println("Problem in adding to cart :"+e.getMessage());
+            return e.getMessage();
+        }
     }
-//    @PostMapping("RemoveFromCart")
-//    public String RemoveFromCart(@RequestBody Order_item_request orderItemRequest)
-//    {
-//        order_service.RemoveFromCart(orderItemRequest);
-//        return "Removed From cart";
-//    }
+
     @PostMapping("RemoveFromCart")
     public ResponseEntity<?> RemoveFromCart(@AuthenticationPrincipal UserPrincipal principal,@RequestBody Order_item_request orderItemRequest)
     {
+        System.out.println("Removing from cart..");
         try {
             order_service.RemoveFromCart(principal.getUser(), orderItemRequest);
             return ResponseEntity.ok("Removed From cart");
         }catch (Exception e)
         {
+            System.out.println("Problem in removing from cart :"+e.getMessage());
             return ResponseEntity.badRequest().body(e);
         }
     }
     @GetMapping("Cart")
     public ResponseEntity<?> cart(@AuthenticationPrincipal UserPrincipal principal)
     {
-        Cart_response list[]= order_service.cart(principal.getUser().getId());
-        return ResponseEntity.ok(list);
+        System.out.println(principal.getUser().getUsername()+" is getting cart..");
+        try {
+            Cart_response list[] = order_service.cart(principal.getUser().getId());
+            return ResponseEntity.ok(list);
+        }catch (Exception e)
+        {
+            System.out.println("Problem in getting "+principal.getUser().getUsername()+" cart : "+e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @PostMapping("ApplyCoupon")
     public ResponseEntity<?> applyCoupon(@AuthenticationPrincipal UserPrincipal principal,@RequestBody String couponCode)
     {
+        System.out.println(principal.getUser().getUsername()+" is applying coupon :"+couponCode);
         try {
             return ResponseEntity.ok(couponService.apply(principal.getUser(),couponCode));
         }catch (Exception e)
         {
+            System.out.println("Problem "+principal.getUser().getUsername()+" in appling coupon :"+couponCode+" : "+e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @PostMapping("RemoveCoupon")
     public ResponseEntity<?> removeCoupon(@AuthenticationPrincipal UserPrincipal principal)
     {
+        System.out.println(principal.getUser().getUsername()+" is removing coupon..");
         try {
             return ResponseEntity.ok(couponService.remove(principal.getUser()));
         }catch (Exception e)
         {
+            System.out.println("Problem "+principal.getUser().getUsername()+" in removing coupon : "+e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @GetMapping("Coupons")
     public ResponseEntity<?> getCoupons(@AuthenticationPrincipal UserPrincipal principal)
     {
+        System.out.println(principal.getUser().getUsername()+" in getting list of coupons.. ");
+
         try {
             return ResponseEntity.ok(couponService.getAllCoupons(principal.getUser()));
         }catch (Exception e)
         {
+            System.out.println("Problem "+principal.getUser().getUsername()+" in getting list of coupons :"+e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -123,6 +144,7 @@ public class OrderController {
             return ResponseEntity.ok(orderSummaryResponse);
         }catch (Exception e)
         {
+            System.out.println("Problem getting Order Summary :"+e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -130,12 +152,13 @@ public class OrderController {
     @PostMapping("saveAddress")
     public ResponseEntity<?> saveAddress(@AuthenticationPrincipal UserPrincipal principal,@RequestBody Address address)
     {
+        System.out.println("Saving Address..");
         try {
-            orderSummaryService.saveAddress(principal.getUser(), address);
             return ResponseEntity.ok("saved Address and Email");
         }
         catch (Exception e)
         {
+            System.out.println("Problem in Saving Address :"+e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

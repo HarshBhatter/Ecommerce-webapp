@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class InventoryReservationService {
             else
                 throw new RuntimeException("Out Of Stock");
             productSizeRepo.saveAndFlush(productSize);
-            inventoryReservationRepo.save(new Inventory_reservation(user,productSize,cartitem.getQuantity(), LocalDateTime.now(),LocalDateTime.now().plusMinutes(5), ReservationStatus.ACTIVE));
+            inventoryReservationRepo.save(new Inventory_reservation(user,productSize,cartitem.getQuantity(), LocalDateTime.now(ZoneOffset.UTC),LocalDateTime.now(ZoneOffset.UTC).plusMinutes(5), ReservationStatus.ACTIVE));
         }
     }
     @Transactional

@@ -42,7 +42,7 @@ public class mainController {
     }
     @PostMapping("create_account")
     public ResponseEntity<?> creating_account(@RequestBody Users user) {
-        System.out.println(user.toString());
+        System.out.println(user.toString()+" enters create account");
         try {
             Users savedUser = user_service.saveNewUser(user);
             String token=jwtService.generateToken(user.getUsername(), user.getVersion());
@@ -52,6 +52,8 @@ public class mainController {
         }
         catch (Exception e)
         {
+            System.out.println(user.toString()+" account creation issue:"+e.getMessage());
+
             return ResponseEntity
                     .badRequest()
                     .body(e.getMessage());
@@ -60,9 +62,12 @@ public class mainController {
 
     @PostMapping("Login")
     public ResponseEntity<?> login(@RequestBody Users user) {
+
         if(user.getPassword()==null)
             throw new BadCredentialsException("Password is required");
-        System.out.println("Login");
+
+        System.out.println(user.getUsername() +"trying to log in..");
+
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
@@ -80,8 +85,8 @@ public class mainController {
     @PostMapping("Logout")// 'l' will cause problem as spring security has a method of logout so 'L'
     public String logout(@AuthenticationPrincipal UserPrincipal principal)
     {
+        System.out.println(principal.getUser().getUsername()+" is logging out..");
         if(principal!=null) {
-            System.out.println("logout "+principal.toString());
             user_service.changeVersion(principal.getUsername());
             return "logging out";
         }
@@ -90,7 +95,7 @@ public class mainController {
     @GetMapping("All")
     public ResponseEntity<?> products(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "8") int size)
     {
-//        System.out.println(page+" "+size);
+        System.out.println("getting all products..");
         try {
             Page<Product_Response> products=products_service.getAll(page,size);
 //            System.out.println(products);
@@ -98,6 +103,7 @@ public class mainController {
         }
         catch (Exception e)
         {
+            System.out.println("problem in getting product : "+e.getMessage());
             return ResponseEntity
                     .badRequest()
                     .body(e.getMessage());
@@ -106,12 +112,15 @@ public class mainController {
     @GetMapping("Mens")
     public ResponseEntity<?> mensproduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
     {
+        System.out.println("Getting mens products..");
         try {
             Page<Product_Response> products=products_service.getMenAll(page,size);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
         {
+            System.out.println("Problem in getting mens products : "+e.getMessage() );
+
             return ResponseEntity
                     .badRequest()
                     .body(e.getMessage());
@@ -120,12 +129,15 @@ public class mainController {
     @GetMapping("Womens")
     public ResponseEntity<?> womensproduct(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
     {
+        System.out.println("Getting womens products..");
         try {
             Page<Product_Response> products=products_service.getWomenAll(page,size);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
         {
+            System.out.println("Problem in getting womens products : "+e.getMessage() );
+
             return ResponseEntity
                     .badRequest()
                     .body(e.getMessage());
@@ -134,12 +146,15 @@ public class mainController {
     @GetMapping("All/")
     public ResponseEntity<?> ProductById(@RequestParam int id)
     {
+        System.out.println("Getting product with id="+id);
         try {
             Individual_Product_Response products=products_service.productById(id);
             return ResponseEntity.ok(products);
         }
         catch (Exception e)
         {
+            System.out.println("Problem in getting products with id="+id+" : "+e.getMessage());
+
             return ResponseEntity
                     .badRequest()
                     .body("Product Not Found");
@@ -148,14 +163,14 @@ public class mainController {
     @PostMapping("Admin/AddProducts")
     public ResponseEntity<?> addProducts(@RequestPart AddProduct_request addProductRequest, @RequestPart("image") MultipartFile image)
     {
-        System.out.println("entered Adding products..");
+        System.out.println("Admin is adding product");
         try{
             Product product=products_service.AddProducts(addProductRequest,image);
             return ResponseEntity.ok(product);
         }
         catch (Exception e)
         {
-            System.out.println(e);
+            System.out.println("Problem in adding product : "+e.getMessage());
             return ResponseEntity.badRequest().body(e);
         }
     }

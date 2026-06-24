@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Entity
@@ -33,7 +34,7 @@ public class OrderSummary {
     private LocalDateTime expiry;
 
     public OrderSummary() {
-        this.expiry=LocalDateTime.now().plusMinutes(4).plusSeconds(50);
+        this.expiry=LocalDateTime.now(ZoneOffset.UTC).plusMinutes(4).plusSeconds(50);
     }
 
     public OrderSummary(long id, Users user, Coupon coupon, Address address, BigDecimal total, BigDecimal discount, BigDecimal discountedTotal) {
@@ -44,7 +45,7 @@ public class OrderSummary {
         this.total=total;
         this.discount=discount;
         this.discountedTotal=discountedTotal;
-        this.expiry=LocalDateTime.now().plusMinutes(4).plusSeconds(50);
+        this.expiry=LocalDateTime.now(ZoneOffset.UTC).plusMinutes(4).plusSeconds(50);
     }
 
     public long getId() {

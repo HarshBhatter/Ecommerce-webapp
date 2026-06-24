@@ -17,27 +17,39 @@ public class PaymentController {
     @PostMapping("razorpay/payment")
     public RazorPayDetail placeOrder(@AuthenticationPrincipal UserPrincipal principal,@RequestBody BigDecimal amtToPay)
     {
+        System.out.println("1st Call to Payment backend");
         try{
             return paymentService.placeOrder(principal.getUser(),amtToPay);
         }catch (Exception e)
         {
+            System.out.println("Problem in 1st Call to Payment backend :"+e.getMessage());
             throw new RuntimeException(e);
         }
     }
     @PostMapping("razorpay/confirm")
     public String confirmOrder(@RequestBody Map<String, String> body, @AuthenticationPrincipal UserPrincipal principal)
     {
+        System.out.println("Confirm Call to Payment backend");
         try{
             return paymentService.confirmOrder(body,principal.getUser());
         }
         catch (Exception e)
         {
+            System.out.println("Problem in Confirm Call to Payment backend +"+e.getMessage() );
             throw new RuntimeException(e);
         }
     }
     @PostMapping("paymentFailed")
     public void paymentFailed(@AuthenticationPrincipal UserPrincipal principal)
     {
-        paymentService.paymentFailed(principal.getUser());
+        System.out.println("Failed Call to Payment backend");
+        try {
+            paymentService.paymentFailed(principal.getUser());
+        }
+        catch (Exception e)
+        {
+            System.out.println("Problem in Failed Call to Payment backend : "+e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

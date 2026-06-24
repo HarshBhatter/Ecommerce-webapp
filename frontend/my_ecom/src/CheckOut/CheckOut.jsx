@@ -89,7 +89,7 @@ export const CheckOut = () => {
 useEffect(() => {
     if (!ordersummary?.expiry) return;
 
-    const expiry = new Date(ordersummary.expiry.replace(" ", "T"));
+    const expiry = new Date(ordersummary.expiry.replace(" ", "T")+"Z");
 
     const interval = setInterval(() => {
         const diff = expiry - new Date();
@@ -125,7 +125,7 @@ useEffect(() => {
                             <div>{ordersummary?.address?.pincode}</div>
                             <br />
                         </div>
-                        <div className='expiry'>Session Ends in : {timeLeft} mins</div>
+                        <div className='expiry'>{timeLeft}</div>
                     </div>
             <CartBody data={data} />
             <div className='CouponSection'>

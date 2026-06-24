@@ -4,6 +4,7 @@ import com.example.ecomMyself.ecomMyself.Notification.Message;
 import com.example.ecomMyself.ecomMyself.model.OrderSummary;
 //import org.springframework.beans.factory.annotation.Autowired;
 import com.example.ecomMyself.ecomMyself.model.Users;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,9 @@ public class EmailNotification implements NotificationType {
 
     @Override
     public void send(Message messageBody, Users user) {
+
+//        with java wmail sender:-
+
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setTo(user.getEmail());

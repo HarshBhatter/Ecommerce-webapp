@@ -24,7 +24,12 @@ public class NotificationService {
     public void notify(NotificationCategory notificationCategory, Users user)
     {
         Message message = messageGenerator.getMessage(notificationCategory,user);
-        for(NotificationType nt:notificationTypes)
-            nt.send(message,user);
+        try {
+            for (NotificationType nt : notificationTypes)
+                nt.send(message, user);
+        }catch (Exception e)
+        {
+            System.out.println("Mail not sent sue to this error "+e.getMessage());
+        }
     }
 }
