@@ -29,8 +29,8 @@ public class mainController {
     private JwtService jwtService;
     @Autowired
     private MyUserDetailService myUserDetailService;
-    @Autowired
-    private User_Repo user_repo;
+//    @Autowired
+//    private User_Repo user_repo;
     @Autowired
     private Products_Service products_service;
     @Autowired
@@ -44,7 +44,7 @@ public class mainController {
     public ResponseEntity<?> creating_account(@RequestBody Users user) {
         System.out.println(user.toString());
         try {
-            Users savedUser = user_service.save(user);
+            Users savedUser = user_service.saveNewUser(user);
             String token=jwtService.generateToken(user.getUsername(), user.getVersion());
             String role=user.getRoles().getRole();
             Auth_response authResponse=new Auth_response(token,role);

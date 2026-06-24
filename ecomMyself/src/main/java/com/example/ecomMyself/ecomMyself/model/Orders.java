@@ -14,7 +14,9 @@ public class Orders {
     private Long id;
     @Column(unique = true)
     private String orderId;
-    private int userId;
+    @ManyToOne
+    @JoinColumn
+    private Users user;
     private String status;
     private LocalDate orderDate;
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
@@ -36,10 +38,10 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(Long id, String orderId,int userId, String status, LocalDate orderDate, List<Order_items> orderItems,BigDecimal total,String razorpayPaymentId,Address address,BigDecimal discount,BigDecimal discountedTotal,String couponCodeApplied) {
+    public Orders(Long id, String orderId,Users user, String status, LocalDate orderDate, List<Order_items> orderItems,BigDecimal total,String razorpayPaymentId,Address address,BigDecimal discount,BigDecimal discountedTotal,String couponCodeApplied) {
         this.id = id;
         this.orderId = orderId;
-        this.userId = userId;
+        this.user = user;
         this.status = status;
         this.orderDate = orderDate;
         this.orderItems = orderItems;
@@ -67,8 +69,8 @@ public class Orders {
         return orderId;
     }
 
-    public int getUserId() {
-        return userId;
+    public Users getUser() {
+        return user;
     }
 
     public String getStatus() {
@@ -91,8 +93,8 @@ public class Orders {
         this.orderId = orderId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     public void setStatus(String status) {

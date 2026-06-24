@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface Orders_repo extends JpaRepository<Orders,Integer>
 {
     List<Orders> findAllByUserId(int id);
+
+    boolean existsByOrderId(String orderId);
 }

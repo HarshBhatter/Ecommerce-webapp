@@ -25,7 +25,7 @@ public class User_service {
     @Autowired
     private NotificationService notificationService;
     @Transactional
-    public Users save(Users user)
+    public Users saveNewUser(Users user)
     {
         if (user_repo.existsByUsername(user.getUsername())) {
             throw new RuntimeException("Username already exists. Please choose another one.");

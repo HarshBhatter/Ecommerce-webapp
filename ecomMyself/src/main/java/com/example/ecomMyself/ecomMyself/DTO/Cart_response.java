@@ -8,6 +8,8 @@ public record Cart_response (
         String color,
         int size,
         int quantity,
-        BigDecimal total
+        BigDecimal total,
+        boolean isStockAvailable
+
 ){
 }

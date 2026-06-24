@@ -25,7 +25,7 @@ public class MessageGenerator {
                     "Happy Shopping!");
 
         if(notificationCategory==NotificationCategory.ORDER_PLACED)
-            return new Message("OrderPlaced!!","Yayyy!! \n Hi "+ user.getUsername()+",\n" +
+            return new Message("Order Placed!!","Yayyy!! \n Hi "+ user.getUsername()+",\n" +
                     "Your order (Order Id:"+order_service.getLatestOrderId(user)+") has been placed successfully and is now being processed. We'll notify you once it has been shipped.\n" +
                     "\n" +
                     "We appreciate your trust in us and hope you enjoy your purchase!\n" +

@@ -83,23 +83,50 @@ export const CheckOut = () => {
             alert("Failed to apply coupon");
         }
     };
+    
+    const [timeLeft, setTimeLeft] = useState("");
 
-    console.log(ordersummary);
+useEffect(() => {
+    if (!ordersummary?.expiry) return;
+
+    const expiry = new Date(ordersummary.expiry.replace(" ", "T"));
+
+    const interval = setInterval(() => {
+        const diff = expiry - new Date();
+
+        if (diff <= 0) {
+            setTimeLeft("Reservation expired!");
+            clearInterval(interval);
+            setTimeout(() => navigate('/Cart'), 2000);
+            return;
+        }
+
+        const minutes = Math.floor(diff / 1000 / 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        setTimeLeft(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+    }, 1000);
+
+    return () => clearInterval(interval);
+}, [ordersummary]);
+
+    // console.log(ordersummary);
+    // console.log(ordersummary.expiry)
 
     return (
         <div className="checkOut">
-
-            <div className="header">~Order Summary~</div>
-            <div className="shippingDetails">
-                <h3>Deliver To :-</h3>
-                <br />
-                <div>{ordersummary?.address?.street}</div>
-                <div>{ordersummary?.address?.city}</div>
-                <div>{ordersummary?.address?.state}</div>
-                <div>{ordersummary?.address?.pincode}</div>
-                <br />
-            </div>
-
+                <div className="header">~Order Summary~</div>
+                    <div className='shippinDetailsBlock'>
+                        <div className="shippingDetails">
+                            <h3>Deliver To :-</h3>
+                            <br />
+                            <div>{ordersummary?.address?.street}</div>
+                            <div>{ordersummary?.address?.city}</div>
+                            <div>{ordersummary?.address?.state}</div>
+                            <div>{ordersummary?.address?.pincode}</div>
+                            <br />
+                        </div>
+                        <div className='expiry'>Session Ends in : {timeLeft} mins</div>
+                    </div>
             <CartBody data={data} />
             <div className='CouponSection'>
                 {
@@ -118,40 +145,40 @@ export const CheckOut = () => {
                     </div>
                 ) : (
                     <div>
-                    <div className="coupon-input-container">
+                        <div className="coupon-input-container">
 
-                        <div className="input-wrapper">
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder="Enter coupon code"
-                                    value={inputCode}
-                                    onChange={(e) => setInputCode(e.target.value)}
-                                />
+                            <div className="input-wrapper">
+                                <div>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter coupon code"
+                                        value={inputCode}
+                                        onChange={(e) => setInputCode(e.target.value)}
+                                    />
+                                </div>
+                                <button
+                                    className="dropdown-btn"
+                                    onClick={() => setShowCoupons(!showCoupons)}
+                                >▼</button>
+
                             </div>
+
                             <button
-                                className="dropdown-btn"
-                                onClick={() => setShowCoupons(!showCoupons)}
-                            >▼</button>
-
+                                className="apply-btn"
+                                onClick={() => handleApplyCoupon(inputCode)}
+                            >
+                                Apply
+                            </button>
                         </div>
-
-                        <button
-                            className="apply-btn"
-                            onClick={() => handleApplyCoupon(inputCode)}
-                        >
-                            Apply
-                        </button>
-                    </div>
-                    {
-                        showCoupons && 
-                        <Coupons
-                            selectable={true}
-                            onSelect={(coupon) => {
-                                setInputCode(coupon);
-                                setShowCoupons(false);
-                        }}/>
-                    }
+                        {
+                            showCoupons && 
+                            <Coupons
+                                selectable={true}
+                                onSelect={(coupon) => {
+                                    setInputCode(coupon);
+                                    setShowCoupons(false);
+                            }}/>
+                        }
                     </div>
                 )
             }
@@ -215,15 +242,27 @@ export const CheckOut = () => {
 
                                     const result = await res2.text();
                                     alert(result);
-                                    window.location.reload();
+                                    window.location.href='/';
                                 }
                             };
 
                             const rzp = new window.Razorpay(options);
 
-                            rzp.on("payment.failed", function () {
-                                alert("Payment Failed!");
-                            });
+                            rzp.on("payment.failed", async function (response) {
+                                try {
+                                    await fetch(`${import.meta.env.VITE_API_URL}/paymentFailed`, {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                                        }
+                                    });
+
+                                    alert("Payment Failed!");
+                                } catch (e) {
+                                    console.error(e);
+                                }
+                        });
 
                             rzp.open();
 

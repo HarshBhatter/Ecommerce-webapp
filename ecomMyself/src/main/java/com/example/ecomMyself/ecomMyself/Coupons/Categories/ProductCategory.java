@@ -25,8 +25,8 @@ public class ProductCategory extends Category{
     public boolean isApplicable(Users user, Coupon coupon, List<Cart> cart) {
         for(Cart item:cart)
         {
-            int id=item.getProductId();
-            String productGender=productRepo.findById(id).get().getGender();
+            Product product=item.getProduct();
+            String productGender=product.getGender();
             if(coupon.getGender().equals(productGender))
                     return true;
         }
@@ -41,7 +41,7 @@ public class ProductCategory extends Category{
         System.out.println(strategy+" "+coupon.getGender());
         for(Cart item:cart)
         {
-            Product product=productRepo.findById(item.getProductId()).get();
+            Product product=item.getProduct();
             String productGender=product.getGender();
             BigDecimal total=product.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
             if(coupon.getGender().equals(productGender)){

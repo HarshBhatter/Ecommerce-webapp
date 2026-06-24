@@ -18,7 +18,9 @@ export const CheckOutData = () => {
               .then(data=>{
                     console.log(data),
                     setOrderSummary(data)})
-              .catch(err => console.log(err))
+              .catch(err => 
+                alert(err)
+              )
       }, [])
       
       return OrderSummary;

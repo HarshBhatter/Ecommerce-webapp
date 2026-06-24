@@ -18,6 +18,9 @@ public class Product_size {
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore //to stop infite loop as one table contains key of other table and same for the other table
     private Product_colors productColors;
+    @Version
+    private long version;
+    private int reserved;
 
     public Product_size() {
     }
@@ -59,5 +62,13 @@ public class Product_size {
 
     public void setProductColors(Product_colors productColors) {
         this.productColors = productColors;
+    }
+
+    public int getReserved() {
+        return reserved;
+    }
+
+    public void setReserved(int reserved) {
+        this.reserved = reserved;
     }
 }

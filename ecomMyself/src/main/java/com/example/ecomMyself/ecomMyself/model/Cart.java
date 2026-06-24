@@ -10,23 +10,28 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int userId;
-    private int productId;
+    @ManyToOne
+    @JoinColumn
+    private Users user;
+    @ManyToOne
+    @JoinColumn
+    private Product product;
     private String color;
     private int size;
     private int quantity;
+    private boolean isStockAvailable;
 
     public Cart() {
         quantity=0;
     }
 
-    public Cart(Long id, int userId, int productId, String color, int size, int quantity) {
-        this.id = id;
-        this.userId = userId;
-        this.productId = productId;
+    public Cart( Users user, Product product, String color, int size, int quantity,boolean isStockAvailable) {
+        this.user = user;
+        this.product = product;
         this.color = color;
         this.size = size;
         this.quantity = quantity;
+        this.isStockAvailable=isStockAvailable;
     }
 
     public Long getId() {
@@ -37,20 +42,20 @@ public class Cart {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public Users getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
-    public int getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductid(int productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product= product;
     }
 
     public String getColor() {
@@ -75,5 +80,13 @@ public class Cart {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public boolean isStockAvailable() {
+        return isStockAvailable;
+    }
+
+    public void setStockAvailable(boolean stockAvailable) {
+        isStockAvailable = stockAvailable;
     }
 }

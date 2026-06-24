@@ -27,30 +27,36 @@ public class OrderController {
     private CouponService couponService;
     @Autowired
     private OrderSummaryService orderSummaryService;
+
     @GetMapping("MyOrders")
     public ResponseEntity<?> getOrder(@AuthenticationPrincipal UserPrincipal principal)
     {
-        List<Order_response> orders= order_service.MyOrders(principal);
-        if (orders.isEmpty()) {
-            return ResponseEntity.status(404).body("No Orders placed");
+        try {
+            List<Order_response> orders = order_service.MyOrders(principal.getUser());
+            if (orders.isEmpty()) {
+                return ResponseEntity.status(404).body("No Orders placed");
+            }
+            return ResponseEntity.ok(orders);
+        }catch(Exception e)
+        {
+            return ResponseEntity.badRequest().body(e);
         }
-        return ResponseEntity.ok(orders);
     }
     @GetMapping("MyOrders/")
-    public Order_response myOrderId(@RequestParam int id)
+    public ResponseEntity<?> myOrderId(@RequestParam int id)
     {
-        return order_service.myOrderId(id);
+        try {
+            return ResponseEntity.ok(order_service.myOrderId(id));
+        }catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body(e);
+        }
     }
-//    @PostMapping("AddToCart")
-//    public String AddToCart(@RequestBody Order_item_request orderItemRequest)
-//    {
-//        order_service.AddToCart(orderItemRequest);
-//        return "Added to cart";
-//    }
+
     @PostMapping("AddToCart")
     public String AddToCart(@AuthenticationPrincipal UserPrincipal principal, @RequestBody Order_item_request orderItemRequest)
     {
-        order_service.AddToCart(principal,orderItemRequest);
+        order_service.AddToCart(principal.getUser(),orderItemRequest);
         return "Added to cart";
     }
 //    @PostMapping("RemoveFromCart")
@@ -60,10 +66,15 @@ public class OrderController {
 //        return "Removed From cart";
 //    }
     @PostMapping("RemoveFromCart")
-    public String RemoveFromCart(@AuthenticationPrincipal UserPrincipal principal,@RequestBody Order_item_request orderItemRequest)
+    public ResponseEntity<?> RemoveFromCart(@AuthenticationPrincipal UserPrincipal principal,@RequestBody Order_item_request orderItemRequest)
     {
-        order_service.RemoveFromCart(principal,orderItemRequest);
-        return "Removed From cart";
+        try {
+            order_service.RemoveFromCart(principal.getUser(), orderItemRequest);
+            return ResponseEntity.ok("Removed From cart");
+        }catch (Exception e)
+        {
+            return ResponseEntity.badRequest().body(e);
+        }
     }
     @GetMapping("Cart")
     public ResponseEntity<?> cart(@AuthenticationPrincipal UserPrincipal principal)
@@ -108,7 +119,7 @@ public class OrderController {
         try {
             OrderSummary orderSummary=orderSummaryService.getOrderSummary(principal.getUser());
             String couponCode=orderSummary.getCoupon()==null?"":orderSummary.getCoupon().getCode();
-            OrderSummary_response orderSummaryResponse=new OrderSummary_response(orderSummary.getId(),couponCode,orderSummary.getAddress(),orderSummary.getTotal(),orderSummary.getDiscount(),orderSummary.getDiscountedTotal());
+            OrderSummary_response orderSummaryResponse=new OrderSummary_response(orderSummary.getId(),couponCode,orderSummary.getAddress(),orderSummary.getTotal(),orderSummary.getDiscount(),orderSummary.getDiscountedTotal(),orderSummary.getExpiry());
             return ResponseEntity.ok(orderSummaryResponse);
         }catch (Exception e)
         {
@@ -128,4 +139,6 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+
 }

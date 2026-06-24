@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -26,23 +27,24 @@ public class OrderSummary {
             @AttributeOverride(name = "pincode", column = @Column(name = "pincode"))
     })
     private Address address;
-    private String emailId;
     private BigDecimal total;
     private BigDecimal discount;
     private BigDecimal discountedTotal;
+    private LocalDateTime expiry;
 
     public OrderSummary() {
+        this.expiry=LocalDateTime.now().plusMinutes(4).plusSeconds(50);
     }
 
-    public OrderSummary(long id, Users user, Coupon coupon, Address address, String emailId,BigDecimal total, BigDecimal discount, BigDecimal discountedTotal) {
+    public OrderSummary(long id, Users user, Coupon coupon, Address address, BigDecimal total, BigDecimal discount, BigDecimal discountedTotal) {
         this.id = id;
         this.user = user;
         this.coupon = coupon;
         this.address=address;
-        this.emailId = emailId;
         this.total=total;
         this.discount=discount;
         this.discountedTotal=discountedTotal;
+        this.expiry=LocalDateTime.now().plusMinutes(4).plusSeconds(50);
     }
 
     public long getId() {
@@ -67,14 +69,6 @@ public class OrderSummary {
 
     public void setCoupon(Coupon coupon) {
         this.coupon = coupon;
-    }
-
-    public String getEmailId() {
-        return emailId;
-    }
-
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
     }
 
     public BigDecimal getTotal() {
@@ -107,5 +101,13 @@ public class OrderSummary {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public LocalDateTime getExpiry() {
+        return expiry;
+    }
+
+    public void setExpiry(LocalDateTime expiry) {
+        this.expiry = expiry;
     }
 }

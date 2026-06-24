@@ -6,6 +6,7 @@ import com.example.ecomMyself.ecomMyself.model.Users;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public record OrderSummary_response(
         long id,
@@ -13,6 +14,7 @@ public record OrderSummary_response(
         Address address,
         BigDecimal total,
         BigDecimal discount,
-        BigDecimal discountedTotal
+        BigDecimal discountedTotal,
+        LocalDateTime expiry
 ) {
 }

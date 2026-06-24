@@ -58,3 +58,17 @@
     justify-content: center;
     display: flex;
 }
+/* .checkOut .upper-block{
+    display: flex;
+} */
+.shippinDetailsBlock
+{
+    display: flex;
+    justify-content: space-between;
+}
+.expiry{
+    padding-right: 5%;
+    color:black;
+    font-weight: bolder;
+    
+}

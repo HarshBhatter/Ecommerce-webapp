@@ -48,7 +48,8 @@ public class CouponService {
         }
         return ans;
     }
-    public ApplyCouponResponse apply(Users user,String couponCode) {
+    public ApplyCouponResponse apply(Users user,String couponCode)
+    {
         Coupon coupon;
         try {
             coupon = couponRepo.findByCode(couponCode).get();
