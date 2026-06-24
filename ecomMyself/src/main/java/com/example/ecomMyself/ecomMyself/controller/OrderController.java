@@ -154,6 +154,7 @@ public class OrderController {
     {
         System.out.println("Saving Address..");
         try {
+            orderSummaryService.saveAddress(principal.getUser(),address);
             return ResponseEntity.ok("saved Address and Email");
         }
         catch (Exception e)
