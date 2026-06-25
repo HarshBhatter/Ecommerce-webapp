@@ -3,6 +3,8 @@ import com.example.ecomMyself.ecomMyself.DTO.RazorPayDetail;
 import com.example.ecomMyself.ecomMyself.service.PaymentService;
 import com.example.ecomMyself.ecomMyself.service.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +14,11 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 public class PaymentController {
-    @Autowired
     private PaymentService paymentService;
-    @PostMapping("razorpay/payment")
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
+    }
+    @PostMapping("payment")
     public RazorPayDetail placeOrder(@AuthenticationPrincipal UserPrincipal principal,@RequestBody BigDecimal amtToPay)
     {
         System.out.println("1st Call to Payment backend");
@@ -26,7 +30,7 @@ public class PaymentController {
             throw new RuntimeException(e);
         }
     }
-    @PostMapping("razorpay/confirm")
+    @PostMapping("paymentConfirm")
     public String confirmOrder(@RequestBody Map<String, String> body, @AuthenticationPrincipal UserPrincipal principal)
     {
         System.out.println("Confirm Call to Payment backend");

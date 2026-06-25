@@ -205,7 +205,7 @@ useEffect(() => {
                         try {
 
                             const res = await fetch(
-                                `${import.meta.env.VITE_API_URL}/razorpay/payment`,
+                                `${import.meta.env.VITE_API_URL}/payment`,
                                 {
                                     method: "POST",
                                     headers: {
@@ -229,7 +229,7 @@ useEffect(() => {
                                 handler: async function (response) {
 
                                     const res2 = await fetch(
-                                        `${import.meta.env.VITE_API_URL}/razorpay/confirm`,
+                                        `${import.meta.env.VITE_API_URL}/paymentConfirm`,
                                         {
                                             method: "POST",
                                             headers: {

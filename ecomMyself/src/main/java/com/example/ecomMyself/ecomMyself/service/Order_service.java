@@ -103,77 +103,7 @@ public class Order_service {
         cartRepo.deleteAllByUserId(user.getId());
         orderSummaryService.orderPlaced(user);
     }
-
-//    @Transactional
-//    public void placeOrder(Users user,String razorpayPaymentId)
-//    {
-//        System.out.println("placing order..");
-//        List<Cart> c=cartRepo.findAllByUserId(user.getId());
-//        List<Order_item_request> orderItemRequestList=new ArrayList<>();
-//        for(Cart items:c)
-//        {
-//            orderItemRequestList.add(new Order_item_request(items.getProductId(),items.getColor(),items.getSize(),items.getQuantity()));
-//        }
-//        Order_request request=new Order_request(orderItemRequestList);
-//        Orders o=new Orders();
-//        String orderId;
-//        do {
-//            orderId = "ORD" + UUID.randomUUID().toString().substring(0,8).toUpperCase();
-//        } while(ordersRepo.existsByOrderId(orderId));
-//
-//        o.setOrderId(orderId);
-//        o.setUserId(user.getId());
-//        o.setOrderDate(LocalDate.now());
-//        o.setStatus("Order Placed");
-//        o.setUserId(user.getId());
-//        o.setRazorpayPaymentId(razorpayPaymentId);
-//        List<Order_items> oi=new ArrayList<>();
-//        BigDecimal total=BigDecimal.ZERO;
-//        for(Order_item_request oir:request.orderItemRequests())
-//        {
-//            Order_items oi2=new Order_items();
-//            Product product=productRepo.findById(oir.productid())
-//                .orElseThrow(() -> new RuntimeException("Product not found"));
-//
-//            Optional<Product_size> productSize=productSizeRepo.findBySizeAndProductColors_ColorAndProductColors_Product_Id(oir.size(),oir.color(),oir.productid());
-//
-//            if(productSize.isEmpty())
-//                throw new RuntimeException("Out Of Stock");
-//            if(productSize.get().getQuantity()< oir.quantity())
-//                throw new RuntimeException("Only "+productSize.get().getQuantity()+ " pieces are left for " + product.getName());
-//
-//            oi2.setColor(oir.color());
-//            oi2.setSize(oir.size());
-//            oi2.setQuantity(oir.quantity());
-//            oi2.setProduct(product);
-//            oi2.setOrders(o);
-//            total=total.add((product.getPrice().multiply(BigDecimal.valueOf(oir.quantity()))));
-//            oi.add(oi2);
-//
-//                int updated = productSizeRepo.reduceStock(
-//                        oir.productid(),
-//                        oir.color(),
-//                        oir.size(),
-//                        oir.quantity()
-//                );
-//
-//        }
-//        o.setTotal(total);
-//        o.setOrderItems(oi);
-//
-//        OrderSummary orderSummary=orderSummaryService.getOrderSummary(user);
-//        o.setAddress(orderSummary.getAddress());
-//        o.setDiscount(orderSummary.getDiscount());
-//        o.setDiscountedTotal(orderSummary.getDiscountedTotal());
-//        if(orderSummary.getCoupon()!=null)
-//            o.setCouponCodeApplied(orderSummary.getCoupon().getCode());
-//
-//        ordersRepo.save(o);
-//        cartRepo.deleteAllByUserId(user.getId());
-//        orderSummaryService.orderPlaced(user);
-//    }
-
-
+    
     public List<Order_response> MyOrders(Users user) {
 
         List<Orders> orders=ordersRepo.findAllByUserId(user.getId());
