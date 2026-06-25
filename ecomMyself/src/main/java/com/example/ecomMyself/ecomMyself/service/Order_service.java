@@ -49,7 +49,7 @@ public class Order_service {
             BigDecimal total=BigDecimal.valueOf(c.getQuantity()).multiply(product.getPrice());
 
             Optional<Product_size> productSize=productSizeRepo.findBySizeAndProductColors_ColorAndProductColors_Product_Id(c.getSize(),c.getColor(),product.getId());
-            boolean isStockAvailable=productSize.get().getQuantity()>=c.getQuantity()?true:false;
+            boolean isStockAvailable=productSize.get().getQuantity()-productSize.get().getReserved()>=c.getQuantity()?true:false;
 
             cartResponse[i]=new Cart_response(product.getId(),name,c.getColor(),c.getSize(),c.getQuantity(),total,isStockAvailable);
         }

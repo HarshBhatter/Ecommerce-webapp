@@ -37,7 +37,7 @@ public class ProductCategory extends Category{
     public double apply(Users user, Coupon coupon) {
         List<Cart> cart=cart_repo.findAllByUserId(user.getId());
         CouponStrategy strategy=strategyFactory.getStrategy(coupon.getDiscountType());
-        double ans=0d;
+        Double ans=0d;
         System.out.println(strategy+" "+coupon.getGender());
         for(Cart item:cart)
         {

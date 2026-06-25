@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Repository
 public interface Inventory_reservation_repo extends JpaRepository<Inventory_reservation,Long> {
@@ -17,7 +18,7 @@ public interface Inventory_reservation_repo extends JpaRepository<Inventory_rese
         SELECT i
         FROM Inventory_reservation i
         WHERE i.status = :status
-        AND i.expireTime < CURRENT_TIMESTAMP
+        AND i.expireTime < :currentTime
         """)
-    List<Inventory_reservation> findByActiveAndExpired(@Param("status") ReservationStatus status);
+    List<Inventory_reservation> findByActiveAndExpired(@Param("status") ReservationStatus status, @Param("currentTime")LocalDateTime currentTime);
 }

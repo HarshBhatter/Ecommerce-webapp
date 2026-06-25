@@ -10,6 +10,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 @Component
 @EnableScheduling
@@ -24,7 +26,7 @@ public class Schedular {
     @Scheduled(fixedDelay = 60000)
     public void schedule()
     {
-        List<Inventory_reservation> inventoryReservations=inventoryReservationRepo.findByActiveAndExpired(ReservationStatus.ACTIVE);
+        List<Inventory_reservation> inventoryReservations=inventoryReservationRepo.findByActiveAndExpired(ReservationStatus.ACTIVE, LocalDateTime.now(ZoneOffset.UTC));
         for(Inventory_reservation ir:inventoryReservations)
             inventoryReservationService.rollbackReservation(ir);
         System.out.println(inventoryReservations.toString()+" Scheduled Delete done "+inventoryReservations.size());

@@ -10,9 +10,9 @@ import { FaRupeeSign } from "react-icons/fa";
 
 
 export const CheckOut = () => {
-    const ordersummary = CheckOutData();
+    const {ordersummary ,summaryloading}= CheckOutData();
     const location = useLocation();
-    const data = CartData();
+    const {data , loading} = CartData();
     const total = data.reduce((acc, item) => acc + (item.total || 0), 0);
     const details = location.state || JSON.parse(localStorage.getItem("shippingDetails"));
     const navigate = useNavigate();
@@ -86,6 +86,7 @@ export const CheckOut = () => {
     
     const [timeLeft, setTimeLeft] = useState("");
 
+
 useEffect(() => {
     if (!ordersummary?.expiry) return;
 
@@ -111,6 +112,8 @@ useEffect(() => {
 
     // console.log(ordersummary);
     // console.log(ordersummary.expiry)
+    if(summaryloading)
+        return <div className='header'>Loading...</div>
 
     return (
         <div className="checkOut">
@@ -127,7 +130,7 @@ useEffect(() => {
                         </div>
                         <div className='expiry'>{timeLeft}</div>
                     </div>
-            <CartBody data={data} />
+            <CartBody data={data}  showStockStatus={false}/>
             <div className='CouponSection'>
                 {
                 (ordersummary?.couponCode?.length)>0 ? (
@@ -170,20 +173,21 @@ useEffect(() => {
                                 Apply
                             </button>
                         </div>
-                        {
-                            showCoupons && 
-                            <Coupons
-                                selectable={true}
-                                onSelect={(coupon) => {
-                                    setInputCode(coupon);
-                                    setShowCoupons(false);
-                            }}/>
-                        }
                     </div>
                 )
             }
 
             </div>
+             {
+                showCoupons && 
+                    <Coupons
+                        selectable={true}
+                        onSelect={(coupon) => {
+                            setInputCode(coupon);
+                            setShowCoupons(false);
+                        }
+                    }/>
+            }
             
             <hr />
             <hr />

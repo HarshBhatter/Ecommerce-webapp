@@ -187,7 +187,7 @@ public class Products_Service {
     public Object getImage(int productId, int colorId) {
         Product p=product_repo.findById(productId).get();
         Product_colors pc=p.getColor().get(colorId);
-        System.out.println(pc.getSize().size());
+//        System.out.println(pc.getSize().size());
         return pc.getPicture();
     }
 }

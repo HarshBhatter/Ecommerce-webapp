@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { FaPlus } from "react-icons/fa";
 
-export const CartBody = ({data}) => {
+export const CartBody = ({data, showStockStatus}) => {
     // const data = CartData();
     // const total = data.reduce((acc, item) => acc + (item.total || 0), 0);
 
@@ -28,7 +28,9 @@ export const CartBody = ({data}) => {
                         {data?.map((product, index) => (
                             <tr>
                                 <td>{index + 1}</td>
-                                <td><NavLink className="nav-link" to={`/product/${product.productId}`}>{product.name}</NavLink></td>
+                                <td><NavLink className="nav-link" to={`/product/${product.productId}`}>{product.name}</NavLink>
+                                    {showStockStatus && product.isStockAvailable==false && <div style={{ color: "red" }}>Out Of Stock</div>}
+                                </td>
                                 <td>{product.color}</td>
                                 <td>{product.size}</td>
                                 <td className='quantity'><div> <FaMinus cursor="pointer" onClick={

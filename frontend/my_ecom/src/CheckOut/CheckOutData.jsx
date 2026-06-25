@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 
 export const CheckOutData = () => {
-  const [OrderSummary,setOrderSummary]=useState(null)
+  const [ordersummary,setOrderSummary]=useState(null);
+  const[summaryloading,setLoading]=useState(true);
   
       useEffect(() => {
           fetch(`${import.meta.env.VITE_API_URL}/OrderSummary`,{
@@ -14,14 +15,12 @@ export const CheckOutData = () => {
               }
           })
               .then(res => res.json())
-              .then(data=>{
-                    console.log(data),
-                    setOrderSummary(data)})
+              .then(data=>{setOrderSummary(data),setLoading(false)})
               .catch(err => 
                 alert(err.message)
               )
       }, [])
       
-      return OrderSummary;
+      return {ordersummary,summaryloading};
 }
 

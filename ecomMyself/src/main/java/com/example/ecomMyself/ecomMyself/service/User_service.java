@@ -36,9 +36,9 @@ public class User_service {
 
         user.setRoles(roles_repo.findById(1).orElseThrow());
         user.setPassword(encoder.encode(user.getPassword()));
-        System.out.println(user.getPassword());
+//        System.out.println(user.getPassword());
         Users saveduser=(Users)user_repo.save(user);
-        notificationService.notify(NotificationCategory.NEW_USER,saveduser);
+//        notificationService.notify(NotificationCategory.NEW_USER,saveduser);
         return saveduser;
     }
     @Transactional
@@ -60,7 +60,7 @@ public class User_service {
         System.out.println(user.toString());
         user.setRoles(roles_repo.findById(1).orElseThrow());
         Users saveduser=(Users)user_repo.save(user);
-        notificationService.notify(NotificationCategory.NEW_USER,saveduser);
+//        notificationService.notify(NotificationCategory.NEW_USER,saveduser);
         return saveduser;
     }
 }

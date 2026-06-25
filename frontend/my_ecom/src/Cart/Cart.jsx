@@ -23,10 +23,13 @@ export const Cart = () => {
         }
     },);
 
-    const data = CartData();
+    const { data, loading } = CartData();
     console.log(data);
 
-    if (data.length == 0)
+    if(loading)
+        return <div className='header'>Loading...</div>
+
+    if (data.length === 0)
         return <div className='header'>Your Cart is Empty!</div>
 
     const total = data.reduce((acc, item) => acc + (item.total || 0), 0);
@@ -34,7 +37,7 @@ export const Cart = () => {
     return (
         <>
             <div className='header'>Your Cart</div>
-            <div><CartBody data={data}/></div>
+            <div><CartBody data={data} showStockStatus={true}/></div>
             <div className="PlaceOrder">
                 <button onClick={() => navigate('/CheckOut')}>place order</button>
             </div>

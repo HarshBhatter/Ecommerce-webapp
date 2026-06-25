@@ -85,12 +85,12 @@ public class PaymentService {
         user_repo.save(user);
 
         order_service.placeOrder(user,razorpayPaymentId);
-        try {
-            notificationService.notify(NotificationCategory.ORDER_PLACED, user);
-        }catch (Exception e)
-        {
-            System.out.println("Order placed for "+user.getUsername()+" but there was an error sending the notifincation");
-        }
+//        try {
+//            notificationService.notify(NotificationCategory.ORDER_PLACED, user);
+//        }catch (Exception e)
+//        {
+//            System.out.println("Order placed for "+user.getUsername()+" but there was an error sending the notifincation");
+//        }
 
         return "ORDER PLACED!";
     }

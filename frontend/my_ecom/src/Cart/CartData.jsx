@@ -5,7 +5,8 @@ import React from 'react'
 
 export const CartData = () => {
 
-    const [cart,setProducts]=useState([])
+    const [data,setProducts]=useState([])
+    const [loading,setloading]=useState(true);
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/Cart`,{
@@ -16,10 +17,10 @@ export const CartData = () => {
             }
         })
             .then(res => res.json())
-            .then(data => setProducts(data))
+            .then(data => {setProducts(data),setloading(false)})
             .catch(err => console.log(err))
     }, [])
     
-    return cart;
+    return {data , loading};
 }
 

@@ -29,6 +29,7 @@ public class OrderSummaryService {
     public void refresh(Users user)
     {
         if(user.getCartValue().compareTo(BigDecimal.ZERO)==0) {
+            System.out.println("cart value=0");
             delete(user);
             return;
         }
@@ -39,12 +40,18 @@ public class OrderSummaryService {
         if(orderSummary.isPresent()) {
             if(orderSummary.get().getCoupon()!=null)
                 couponService.apply(user, orderSummary.get().getCoupon().getCode());
+            else
+            {
+                orderSummary.get().setDiscountedTotal(user.getCartValue());
+                orderSummary.get().setTotal(user.getCartValue());
+                orderSummary.get().setDiscount(BigDecimal.ZERO);
+                orderSummary_repo.save(orderSummary.get());
+            }
         }
     }
 
     public void delete(Users user) {
-        if(orderSummary_repo.existsByUser(user))
-            orderSummary_repo.deleteAllByUser(user);
+        orderSummary_repo.deleteAllByUser(user);
     }
     @Transactional
     public OrderSummary getOrderSummary(Users user)
@@ -66,7 +73,7 @@ public class OrderSummaryService {
                     throw new RuntimeException(e);
             }catch (Exception e) {
                 e.printStackTrace();
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -80,7 +87,7 @@ public class OrderSummaryService {
     }
     public void saveAddress(Users user, Address address)
     {
-        OrderSummary orderSummary=orderSummary_repo.findByUser(user).get();
+        OrderSummary orderSummary=getOrderSummary(user);
         orderSummary.setAddress(address);
         orderSummary_repo.save(orderSummary);
     }
