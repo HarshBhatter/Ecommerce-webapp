@@ -90,7 +90,7 @@ Verified using Apache JMeter.
 
 ---
 
-# 🧪 Load Testing
+# 🧪 Concurrency Testing
 
 Concurrent checkout tested using Apache JMeter.
 
