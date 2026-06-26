@@ -110,42 +110,6 @@ Result:
 
 ---
 
-# 🏗 Architecture
-
-(Add architecture diagram)
-
-Example
-
-React
-
-↓
-
-Spring Boot
-
-↓
-
-Spring Security
-
-↓
-
-Business Services
-
-↓
-
-Repositories
-
-↓
-
-MySQL
-
----
-
-# 🗄 Database Schema
-
-(Add EER Diagram)
-
----
-
 # 🛠 Tech Stack
 
 ## Frontend
