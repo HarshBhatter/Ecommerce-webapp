@@ -182,6 +182,7 @@ useEffect(() => {
                 showCoupons && 
                     <Coupons
                         selectable={true}
+                        endpoint="/Coupons"
                         onSelect={(coupon) => {
                             setInputCode(coupon);
                             setShowCoupons(false);

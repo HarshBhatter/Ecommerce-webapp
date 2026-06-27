@@ -2,8 +2,9 @@ import React from 'react'
 import { CouponsData } from './CouponsData'
 import './Coupons.css'
 
-export const Coupons =  ({ selectable = false, onSelect }) => {
-    const {Coupons,loading}=CouponsData();
+export const Coupons =  ({ selectable = false, onSelect , endpoint = "/AllCoupons" }) => 
+    {
+    const {Coupons,loading}=CouponsData(endpoint);
     if(loading)
         return <div className='header'>Loading...</div>
     if(Coupons.length ===0)

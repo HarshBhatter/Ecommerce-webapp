@@ -2,12 +2,12 @@ import React from 'react'
 import { useState } from 'react'
 import { useEffect } from 'react'
 
-export const CouponsData = () => {
+export const CouponsData = (endpoint = "/AllCoupons") => {
   const [Coupons,setCoupons]=useState([])
   const [loading,setLoading]=useState(true);
 
       useEffect(() => {
-          fetch(`${import.meta.env.VITE_API_URL}/Coupons`,{
+          fetch(`${import.meta.env.VITE_API_URL}${endpoint}`,{
               method:'GET',
               headers:{
                   'Content-Type':'application/json',

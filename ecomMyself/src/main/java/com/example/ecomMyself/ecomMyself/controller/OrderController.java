@@ -121,12 +121,12 @@ public class OrderController {
         }
     }
     @GetMapping("Coupons")
-    public ResponseEntity<?> getCoupons(@AuthenticationPrincipal UserPrincipal principal)
+    public ResponseEntity<?> getApplicableCoupons(@AuthenticationPrincipal UserPrincipal principal)
     {
         System.out.println(principal.getUser().getUsername()+" in getting list of coupons.. ");
 
         try {
-            return ResponseEntity.ok(couponService.getAllCoupons(principal.getUser()));
+            return ResponseEntity.ok(couponService.getApplicableCoupons(principal.getUser()));
         }catch (Exception e)
         {
             System.out.println("Problem "+principal.getUser().getUsername()+" in getting list of coupons :"+e.getMessage());
@@ -163,6 +163,18 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("AllCoupons")
+    public ResponseEntity<?> getAllCoupons(@AuthenticationPrincipal UserPrincipal principal)
+    {
+        System.out.println(principal.getUser().getUsername()+" in getting list of all coupons.. ");
 
+        try {
+            return ResponseEntity.ok(couponService.getAllCoupons(principal.getUser()));
+        }catch (Exception e)
+        {
+            System.out.println("Problem "+principal.getUser().getUsername()+" in getting list of coupons :"+e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 }

@@ -33,7 +33,7 @@ public class CouponService {
     private CategoryFactory categoryFactory;
     @Autowired
     private OrderSummary_repo orderSummary_repo;
-    public List<?> getAllCoupons(Users user)
+    public List<?> getApplicableCoupons(Users user)
     {
         List<Cart> cart=cart_repo.findAllByUserId(user.getId());
 
@@ -101,5 +101,19 @@ public class CouponService {
         usage_map.put((long)user.getId(),usage_map.getOrDefault(user.getId(),0)+1);
         coupon.setUsage(usage_map);
         couponRepo.save(coupon);
+    }
+
+    public List<?> getAllCoupons(Users user)
+    {
+        List<Coupon> coupons=couponRepo.findAll();
+        List<Coupons_response> ans=new ArrayList<>();
+
+        for(Coupon c:coupons)
+        {
+            Category category=categoryFactory.getCategory(c.getCouponCategory());
+            if(category.checkExpiry(c) && category.checkActive(c) && category.checkUsage(user,c))
+                ans.add(new Coupons_response(c.getId(),c.getCode(),c.getDescription(),c.getExpiryDate()));
+        }
+        return ans;
     }
 }
