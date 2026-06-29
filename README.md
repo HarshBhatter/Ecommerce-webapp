@@ -8,6 +8,11 @@ It was built to explore real-world backend challenges like authentication, payme
 
 > The double **M** represents **Multiple users** interacting with the platform simultaneously — inspired by one of the most interesting problems tackled in this project: **handling concurrent checkout safely.**
 
+
+
+https://github.com/user-attachments/assets/9aae212b-4283-4f42-8515-39c1a0df7758
+
+
 ---
 
 ## 🌐 Live Demo
