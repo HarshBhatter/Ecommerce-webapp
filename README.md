@@ -108,6 +108,10 @@ Result:
 
 ✅ Inventory remains consistent
 
+
+https://github.com/user-attachments/assets/cac8ed97-78c7-44f6-ac32-8d889475dd6f
+
+
 ---
 
 # 🛠 Tech Stack
